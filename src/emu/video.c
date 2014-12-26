@@ -1064,13 +1064,13 @@ typedef software_renderer<UINT32, 0,0,0, 16,8,0, false, false> snap_renderer;
 void video_manager::create_snapshot_bitmap(screen_device *screen)
 {
 	// select the appropriate view in our dummy target
-	if (m_snap_native && screen != NULL)
-	{
-		screen_device_iterator iter(machine().root_device());
-		int view_index = iter.indexof(*screen);
-		assert(view_index != -1);
+//	if (m_snap_native && screen != NULL)
+//	{
+//		screen_device_iterator iter(machine().root_device());
+//		int view_index = iter.indexof(*screen);
+//		assert(view_index != -1);
 //		m_snap_target->set_view(view_index);
-	}
+//	}
 
 	// get the minimum width/height and set it on the target
 	INT32 width = m_snap_width;

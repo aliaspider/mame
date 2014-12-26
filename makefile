@@ -235,7 +235,8 @@ BUILD_ZLIB = 0
 #BUILD_MIDILIB = 1
 
 # uncomment next line to include the symbols
- SYMBOLS = 1
+
+# SYMBOLS = 1
 
 # specify symbols level or leave commented to use the default
 # (default is SYMLEVEL = 2 normally; use 1 if you only need backtrace)
@@ -304,6 +305,11 @@ ifdef DEBUG
 ifndef PROFILER
 PROFILER = 1
 endif
+SYMBOLS = 1
+OPTIMIZE = 0
+else
+SYMBOLS = 0
+OPTIMIZE = 3
 endif
 
 # TODO: also move it up, so it isn't optimized by default?
