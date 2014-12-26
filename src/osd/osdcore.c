@@ -200,7 +200,7 @@ void osd_list_midi_devices(void)
 	printf("MIDI input ports:\n");
 	for (int i = 0; i < num_devs; i++)
 	{
-		pmInfo = Pm_GetDeviceInfo(i);
+      pmInfo = Pm_GetDeviceInfo(i);
 
 		if (pmInfo->input)
 		{

@@ -94,7 +94,7 @@ typedef device_t * (*machine_config_constructor)(machine_config &config, device_
 #include "network.h"
 
 // lua engine
-#include "luaengine.h"
+//#include "luaengine.h"
 
 // the running machine
 #include "mame.h"

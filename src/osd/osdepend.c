@@ -477,7 +477,7 @@ bool osd_interface::network_init()
 bool osd_interface::midi_init()
 {
 	#ifndef DISABLE_MIDI
-	Pm_Initialize();
+   Pm_Initialize();
 	#endif
 	return true;
 }

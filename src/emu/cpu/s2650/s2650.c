@@ -45,8 +45,9 @@ s2650_device::s2650_device(const machine_config &mconfig, const char *tag, devic
 
 offs_t s2650_device::disasm_disassemble(char *buffer, offs_t pc, const UINT8 *oprom, const UINT8 *opram, UINT32 options)
 {
-	extern CPU_DISASSEMBLE( s2650 );
-	return CPU_DISASSEMBLE_NAME(s2650)(this, buffer, pc, oprom, opram, options);
+//   extern CPU_DISASSEMBLE( s2650 );
+//	return CPU_DISASSEMBLE_NAME(s2650)(this, buffer, pc, oprom, opram, options);
+   return 0;
 }
 
 

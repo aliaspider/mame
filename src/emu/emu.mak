@@ -91,7 +91,6 @@ EMUOBJS = \
 	$(EMUOBJ)/info.o \
 	$(EMUOBJ)/input.o \
 	$(EMUOBJ)/ioport.o \
-	$(EMUOBJ)/luaengine.o \
 	$(EMUOBJ)/mame.o \
 	$(EMUOBJ)/machine.o \
 	$(EMUOBJ)/mconfig.o \
@@ -143,7 +142,6 @@ EMUOBJS = \
 	$(EMUOBJ)/debug/express.o \
 	$(EMUOBJ)/debug/textbuf.o \
 	$(EMUOBJ)/profiler.o \
-	$(EMUOBJ)/webengine.o \
 	$(OSDOBJ)/osdcore.o \
 	$(OSDOBJ)/osdepend.o \
 	$(OSDOBJ)/osdnet.o \
@@ -222,7 +220,7 @@ include $(EMUSRC)/sound/sound.mak
 # netlist core objects
 #-------------------------------------------------
 
-include $(EMUSRC)/netlist/netlist.mak
+#include $(EMUSRC)/netlist/netlist.mak
 
 #-------------------------------------------------
 # video core objects
@@ -261,15 +259,15 @@ $(EMUOBJ)/video.o:  $(EMUSRC)/rendersw.inc
 # core layouts
 #-------------------------------------------------
 
-$(EMUOBJ)/rendlay.o:    $(EMULAYOUT)/dualhovu.lh \
-						$(EMULAYOUT)/dualhsxs.lh \
-						$(EMULAYOUT)/dualhuov.lh \
-						$(EMULAYOUT)/horizont.lh \
-						$(EMULAYOUT)/triphsxs.lh \
-						$(EMULAYOUT)/quadhsxs.lh \
-						$(EMULAYOUT)/vertical.lh \
-						$(EMULAYOUT)/lcd.lh \
-						$(EMULAYOUT)/lcd_rot.lh \
-						$(EMULAYOUT)/noscreens.lh \
+#$(EMUOBJ)/rendlay.o:    $(EMULAYOUT)/dualhovu.lh \
+#						$(EMULAYOUT)/dualhsxs.lh \
+#						$(EMULAYOUT)/dualhuov.lh \
+#						$(EMULAYOUT)/horizont.lh \
+#						$(EMULAYOUT)/triphsxs.lh \
+#						$(EMULAYOUT)/quadhsxs.lh \
+#						$(EMULAYOUT)/vertical.lh \
+#						$(EMULAYOUT)/lcd.lh \
+#						$(EMULAYOUT)/lcd_rot.lh \
+#						$(EMULAYOUT)/noscreens.lh \
 
-$(EMUOBJ)/video.o:      $(EMULAYOUT)/snap.lh
+#$(EMUOBJ)/video.o:      $(EMULAYOUT)/snap.lh

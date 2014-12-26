@@ -1,6 +1,6 @@
 ###########################################################################
 #
-#   sdl.mak
+#   gl.mak
 #
 #   SDL-specific makefile
 #
@@ -30,7 +30,7 @@
 
 # uncomment next line to build without OpenGL support
 
-# NO_OPENGL = 1
+ NO_OPENGL = 1
 
 # uncomment next line to build without X11 support (TARGETOS=unix only)
 # this also implies, that no debugger will be builtin.
@@ -52,7 +52,7 @@ NO_USE_XINPUT = 1
 # GL-dispatching.
 # This option takes precedence over MESA_INSTALL_ROOT
 
-USE_DISPATCH_GL = 1
+#USE_DISPATCH_GL = 1
 
 # The following settings are currently supported for unix only.
 # There is no need to play with this option unless you are doing
@@ -66,16 +66,18 @@ USE_DISPATCH_GL = 1
 # SDL_INSTALL_ROOT = /usr/local/sdl20
 
 # uncomment to disable the Qt debugger (on non-OSX this disables all debugging)
-# NO_USE_QTDEBUG = 1
+ NO_USE_QTDEBUG = 1
 
 # uncomment to disable MIDI
-# NO_USE_MIDI = 1
+ NO_USE_MIDI = 1
 
 # uncomment to disable implementations based on assembler code
 # NOASM = 1
 
 # change for custom OS X installations
 SDL_FRAMEWORK_PATH = /Library/Frameworks/
+
+
 
 ###########################################################################
 ##################   END USER-CONFIGURABLE OPTIONS   ######################
@@ -203,7 +205,16 @@ endif
 ifeq ($(TARGETOS),linux)
 BASE_TARGETOS = unix
 SYNC_IMPLEMENTATION = tc
-SDL_NETWORK = taptun
+#SDL_NETWORK = taptun
+BASE_TARGETOS = unix
+#SYNC_IMPLEMENTATION = mini
+NO_DEBUGGER = 1
+NO_X11 = 1
+NO_USE_XINPUT = 1
+NO_USE_MIDI = 1
+NO_USE_QTDEBUG = 1
+DONT_USE_NETWORK = 1
+#$(error hiii)
 
 ifndef NO_USE_MIDI
 INCPATH += `pkg-config --cflags alsa`
@@ -785,7 +796,7 @@ LIBS += -lpcap
 endif
 endif
 else
-OSDOBJS += $(SDLOBJ)/netdev.o
+#OSDOBJS += $(SDLOBJ)/netdev.o
 endif
 
 #-------------------------------------------------

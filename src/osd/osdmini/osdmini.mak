@@ -47,6 +47,7 @@ MINIOBJ = $(OBJ)/osd/$(OSD)
 
 OBJDIRS += $(MINIOBJ)
 
+DEFS += -DDISABLE_MIDI
 
 
 #-------------------------------------------------

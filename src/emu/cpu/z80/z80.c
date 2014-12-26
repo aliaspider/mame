@@ -3691,8 +3691,9 @@ void z80_device::state_string_export(const device_state_entry &entry, astring &s
 
 offs_t z80_device::disasm_disassemble( char *buffer, offs_t pc, const UINT8 *oprom, const UINT8 *opram, UINT32 options )
 {
-	extern CPU_DISASSEMBLE( z80 );
-	return CPU_DISASSEMBLE_NAME(z80)(this, buffer, pc, oprom, opram, options);
+//	extern CPU_DISASSEMBLE( z80 );
+//	return CPU_DISASSEMBLE_NAME(z80)(this, buffer, pc, oprom, opram, options);
+   return 0;
 }
 
 

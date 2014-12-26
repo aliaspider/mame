@@ -28,10 +28,10 @@ TARGET = mame
 endif
 
 ifndef SUBTARGET
-SUBTARGET = $(TARGET)
+SUBTARGET = pacman
 endif
 
-
+OSD = osdmini
 
 #-------------------------------------------------
 # specify OSD layer: windows, sdl, etc.
@@ -217,25 +217,25 @@ endif
 # BIGENDIAN = 1
 
 # uncomment next line to build expat as part of MAME build
-BUILD_EXPAT = 1
+#BUILD_EXPAT = 1
 
 # uncomment next line to build zlib as part of MAME build
-BUILD_ZLIB = 1
+BUILD_ZLIB = 0
 
 # uncomment next line to build libflac as part of MAME build
-BUILD_FLAC = 1
+#BUILD_FLAC = 1
 
 # uncomment next line to build jpeglib as part of MAME build
-BUILD_JPEGLIB = 1
+#BUILD_JPEGLIB = 1
 
 # uncomment next line to build libsqlite3 as part of MAME/MESS build
-BUILD_SQLITE3 = 1
+#BUILD_SQLITE3 = 1
 
 # uncomment next line to build PortMidi as part of MAME/MESS build
-BUILD_MIDILIB = 1
+#BUILD_MIDILIB = 1
 
 # uncomment next line to include the symbols
-# SYMBOLS = 1
+ SYMBOLS = 1
 
 # specify symbols level or leave commented to use the default
 # (default is SYMLEVEL = 2 normally; use 1 if you only need backtrace)
@@ -263,7 +263,7 @@ BUILD_MIDILIB = 1
 # LTO = 1
 
 # uncomment next line to disable networking
-# DONT_USE_NETWORK = 1
+ DONT_USE_NETWORK = 1
 
 # uncomment to enable SSE2 optimized code and SSE2 code generation (implicitly enabled by 64-bit compilers)
 # SSE2 = 1
@@ -345,9 +345,9 @@ endif
 
 # compiler, linker and utilities
 ifneq ($(TARGETOS),emscripten)
-AR = @ar
-CC = @gcc
-LD = @g++
+AR = ar
+CC = gcc
+LD = g++
 endif
 MD = -mkdir$(EXE)
 RM = @rm -f
@@ -788,7 +788,7 @@ ifeq ($(BUILD_MIDILIB),1)
 INCPATH += -I$(SRC)/lib/portmidi
 MIDI_LIB = $(OBJ)/libportmidi.a
 else
-LIBS += -lportmidi
+#LIBS += -lportmidi
 MIDI_LIB =
 endif
 
@@ -830,12 +830,12 @@ include $(SRC)/osd/$(OSD)/$(OSD).mak
 # then the various core pieces
 include $(SRC)/build/build.mak
 include $(SRC)/$(TARGET)/$(SUBTARGET).mak
--include $(SRC)/$(TARGET)/osd/$(OSD)/$(OSD).mak
+#-include $(SRC)/$(TARGET)/osd/$(OSD)/$(OSD).mak
 include $(SRC)/emu/emu.mak
 include $(SRC)/lib/lib.mak
--include $(SRC)/osd/$(CROSS_BUILD_OSD)/build.mak
-include $(SRC)/tools/tools.mak
-include $(SRC)/regtests/regtests.mak
+#-include $(SRC)/osd/$(CROSS_BUILD_OSD)/build.mak
+#include $(SRC)/tools/tools.mak
+#include $(SRC)/regtests/regtests.mak
 
 # combine the various definitions to one
 CCOMFLAGS += $(INCPATH)
@@ -906,7 +906,8 @@ $(sort $(OBJDIRS)):
 
 ifndef EXECUTABLE_DEFINED
 
-$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(SQLITE3_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE)
+#$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(SQLITE3_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE)
+$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(FORMATS_LIB) $(ZLIB) $(LIBOCORE) $(RESFILE) $(7Z_LIB)
 	$(CC) $(CDEFS) $(CFLAGS) -c $(SRC)/version.c -o $(VERSIONOBJ)
 	@echo Linking $@...
 ifeq ($(TARGETOS),emscripten)
@@ -996,5 +997,5 @@ endif
 # optional dependencies file
 #-------------------------------------------------
 
--include depend_emu.mak
--include depend_$(TARGET).mak
+#-include depend_emu.mak
+#-include depend_$(TARGET).mak
