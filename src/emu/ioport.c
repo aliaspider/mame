@@ -1898,8 +1898,8 @@ void ioport_field::frame_update(ioport_value &result, bool mouse_down)
 	}
 
 	// if UI is active, ignore digital inputs
-	if (machine().ui().is_menu_active())
-		return;
+//	if (machine().ui().is_menu_active())
+//		return;
 
 	// if the state changed, look for switch down/switch up
 	bool curstate = mouse_down || machine().input().seq_pressed(seq()) || m_digital_value;
@@ -1911,8 +1911,8 @@ void ioport_field::frame_update(ioport_value &result, bool mouse_down)
 	}
 
 	// if we're a keyboard type and using natural keyboard, bail
-	if (m_type == IPT_KEYBOARD && machine().ui().use_natural_keyboard())
-		return;
+//	if (m_type == IPT_KEYBOARD && machine().ui().use_natural_keyboard())
+//		return;
 
 	// coin impulse option
 	int effective_impulse = m_impulse;
@@ -1973,12 +1973,12 @@ void ioport_field::frame_update(ioport_value &result, bool mouse_down)
 		if (machine().options().coin_lockout())
 		{
 			if (verbose)
-				machine().ui().popup_time(3, "Coinlock disabled %s.", name());
+            printf("Coinlock disabled %s.", name());
 			curstate = false;
 		}
 		else
 			if (verbose)
-				machine().ui().popup_time(3, "Coinlock disabled, but broken through %s.", name());
+            printf("Coinlock disabled, but broken through %s.", name());
 	}
 
 	// if we're active, set the appropriate bits in the digital state
@@ -2893,24 +2893,24 @@ g_profiler.start(PROFILER_INPUT);
 	update_defaults();
 
 	// perform mouse hit testing
-	INT32 mouse_target_x, mouse_target_y;
-	bool mouse_button;
-	render_target *mouse_target = ui_input_find_mouse(machine(), &mouse_target_x, &mouse_target_y, &mouse_button);
+//	INT32 mouse_target_x, mouse_target_y;
+//	bool mouse_button;
+//	render_target *mouse_target = ui_input_find_mouse(machine(), &mouse_target_x, &mouse_target_y, &mouse_button);
 
 	// if the button is pressed, map the point and determine what was hit
 	ioport_field *mouse_field = NULL;
-	if (mouse_button && mouse_target != NULL)
-	{
-		const char *tag = NULL;
-		ioport_value mask;
-		float x, y;
-		if (mouse_target->map_point_input(mouse_target_x, mouse_target_y, tag, mask, x, y))
-		{
-			ioport_port *port = machine().root_device().ioport(tag);
-			if (port != NULL)
-				mouse_field = port->field(mask);
-		}
-	}
+//	if (mouse_button && mouse_target != NULL)
+//	{
+//		const char *tag = NULL;
+//		ioport_value mask;
+//		float x, y;
+//		if (mouse_target->map_point_input(mouse_target_x, mouse_target_y, tag, mask, x, y))
+//		{
+//			ioport_port *port = machine().root_device().ioport(tag);
+//			if (port != NULL)
+//				mouse_field = port->field(mask);
+//		}
+//	}
 
 	// loop over all input ports
 	for (ioport_port *port = first_port(); port != NULL; port = port->next())

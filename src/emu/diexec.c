@@ -623,7 +623,7 @@ int device_execute_interface::standard_irq_callback(int irqline)
 		vector = m_driver_irq(device(),irqline);
 
 	// notify the debugger
-	debugger_interrupt_hook(&device(), irqline);
+//	debugger_interrupt_hook(&device(), irqline);
 	return vector;
 }
 

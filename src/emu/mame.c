@@ -264,11 +264,7 @@ void CLIB_DECL popmessage(const char *format, ...)
 	if (machine_manager::instance()==NULL || machine_manager::instance()->machine() == NULL) return;
 
 	// if the format is NULL, it is a signal to clear the popmessage
-	if (format == NULL)
-		machine_manager::instance()->machine()->ui().popup_time(0, " ");
-
-	// otherwise, generate the buffer and call the UI to display the message
-	else
+   if (format != NULL)
 	{
 		astring temp;
 		va_list arg;
@@ -279,7 +275,7 @@ void CLIB_DECL popmessage(const char *format, ...)
 		va_end(arg);
 
 		// pop it in the UI
-		machine_manager::instance()->machine()->ui().popup_time(temp.len() / 40 + 2, "%s", temp.cstr());
+      printf("%s", temp.cstr());
 	}
 }
 

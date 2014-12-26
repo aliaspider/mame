@@ -18,7 +18,7 @@
 #include "rendersw.inc"
 #include "output.h"
 
-#include "snap.lh"
+//#include "snap.lh"
 
 
 
@@ -119,26 +119,26 @@ video_manager::video_manager(running_machine &machine)
 	const char *viewname = machine.options().snap_view();
 	m_snap_native = (machine.first_screen() != NULL && (viewname[0] == 0 || strcmp(viewname, "native") == 0));
 
-	// the native target is hard-coded to our internal layout and has all options disabled
-	if (m_snap_native)
-	{
-		m_snap_target = machine.render().target_alloc(layout_snap, RENDER_CREATE_SINGLE_FILE | RENDER_CREATE_HIDDEN);
-		m_snap_target->set_backdrops_enabled(false);
-		m_snap_target->set_overlays_enabled(false);
-		m_snap_target->set_bezels_enabled(false);
-		m_snap_target->set_cpanels_enabled(false);
-		m_snap_target->set_marquees_enabled(false);
-		m_snap_target->set_screen_overlay_enabled(false);
-		m_snap_target->set_zoom_to_screen(false);
-	}
+//	// the native target is hard-coded to our internal layout and has all options disabled
+//	if (m_snap_native)
+//	{
+//		m_snap_target = machine.render().target_alloc(layout_snap, RENDER_CREATE_SINGLE_FILE | RENDER_CREATE_HIDDEN);
+//		m_snap_target->set_backdrops_enabled(false);
+//		m_snap_target->set_overlays_enabled(false);
+//		m_snap_target->set_bezels_enabled(false);
+//		m_snap_target->set_cpanels_enabled(false);
+//		m_snap_target->set_marquees_enabled(false);
+//		m_snap_target->set_screen_overlay_enabled(false);
+//		m_snap_target->set_zoom_to_screen(false);
+//	}
 
 	// other targets select the specified view and turn off effects
-	else
-	{
+//	else
+//	{
 		m_snap_target = machine.render().target_alloc(NULL, RENDER_CREATE_HIDDEN);
-		m_snap_target->set_view(m_snap_target->configured_view(viewname, 0, 1));
-		m_snap_target->set_screen_overlay_enabled(false);
-	}
+//		m_snap_target->set_view(m_snap_target->configured_view(viewname, 0, 1));
+//		m_snap_target->set_screen_overlay_enabled(false);
+//	}
 
 	// extract snap resolution if present
 	if (sscanf(machine.options().snap_size(), "%dx%d", &m_snap_width, &m_snap_height) != 2)
@@ -211,7 +211,7 @@ void video_manager::frame_update(bool debug)
 	}
 
 	// draw the user interface
-	machine().ui().update_and_render(&machine().render().ui_container());
+//	machine().ui().update_and_render(&machine().render().ui_container());
 
 	// if we're throttling, synchronize before rendering
 	attotime current_time = machine().time();
@@ -612,8 +612,8 @@ inline int video_manager::effective_frameskip() const
 inline bool video_manager::effective_throttle() const
 {
 	// if we're paused, or if the UI is active, we always throttle
-	if (machine().paused() || machine().ui().is_menu_active())
-		return true;
+//	if (machine().paused() || machine().ui().is_menu_active())
+//		return true;
 
 	// if we're fast forwarding, we don't throttle
 	if (m_fastforward)
@@ -1069,7 +1069,7 @@ void video_manager::create_snapshot_bitmap(screen_device *screen)
 		screen_device_iterator iter(machine().root_device());
 		int view_index = iter.indexof(*screen);
 		assert(view_index != -1);
-		m_snap_target->set_view(view_index);
+//		m_snap_target->set_view(view_index);
 	}
 
 	// get the minimum width/height and set it on the target

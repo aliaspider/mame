@@ -158,10 +158,10 @@ class screen_device;
 class render_container;
 class render_manager;
 struct xml_data_node;
-class render_font;
+//class render_font;
 struct object_transform;
-class layout_element;
-class layout_view;
+//class layout_element;
+//class layout_view;
 
 
 // texture scaling callback
@@ -516,7 +516,7 @@ public:
 	// add items to the list
 	void add_line(float x0, float y0, float x1, float y1, float width, rgb_t argb, UINT32 flags);
 	void add_quad(float x0, float y0, float x1, float y1, rgb_t argb, render_texture *texture, UINT32 flags);
-	void add_char(float x0, float y0, float height, float aspect, rgb_t argb, render_font &font, UINT16 ch);
+//	void add_char(float x0, float y0, float height, float aspect, rgb_t argb, render_font &font, UINT16 ch);
 	void add_point(float x0, float y0, float diameter, rgb_t argb, UINT32 flags) { add_line(x0, y0, x0, y0, diameter, argb, flags); }
 	void add_rect(float x0, float y0, float x1, float y1, rgb_t argb, UINT32 flags) { add_quad(x0, y0, x1, y1, argb, NULL, flags); }
 
@@ -580,7 +580,7 @@ private:
 };
 
 
-#include "rendlay.h"
+//#include "rendlay.h"
 
 // ======================> render_target
 
@@ -605,16 +605,16 @@ public:
 	float max_update_rate() const { return m_max_refresh; }
 	int orientation() const { return m_orientation; }
 	render_layer_config layer_config() const { return m_layerconfig; }
-	int view() const { return view_index(*m_curview); }
+//	int view() const { return view_index(*m_curview); }
 	bool hidden() const { return ((m_flags & RENDER_CREATE_HIDDEN) != 0); }
-	bool is_ui_target() const;
+//	bool is_ui_target() const;
 	int index() const;
 
 	// setters
 	void set_bounds(INT32 width, INT32 height, float pixel_aspect = 0);
 	void set_max_update_rate(float updates_per_second) { m_max_refresh = updates_per_second; }
 	void set_orientation(int orientation) { m_orientation = orientation; }
-	void set_view(int viewindex);
+//	void set_view(int viewindex);
 	void set_max_texture_size(int maxwidth, int maxheight);
 
 	// layer config getters
@@ -627,20 +627,20 @@ public:
 	bool zoom_to_screen() const { return m_layerconfig.zoom_to_screen(); }
 
 	// layer config setters
-	void set_backdrops_enabled(bool enable) { m_layerconfig.set_backdrops_enabled(enable); update_layer_config(); }
-	void set_overlays_enabled(bool enable) { m_layerconfig.set_overlays_enabled(enable); update_layer_config(); }
-	void set_bezels_enabled(bool enable) { m_layerconfig.set_bezels_enabled(enable); update_layer_config(); }
-	void set_cpanels_enabled(bool enable) { m_layerconfig.set_cpanels_enabled(enable); update_layer_config(); }
-	void set_marquees_enabled(bool enable) { m_layerconfig.set_marquees_enabled(enable); update_layer_config(); }
-	void set_screen_overlay_enabled(bool enable) { m_layerconfig.set_screen_overlay_enabled(enable); update_layer_config(); }
-	void set_zoom_to_screen(bool zoom) { m_layerconfig.set_zoom_to_screen(zoom); update_layer_config(); }
+//	void set_backdrops_enabled(bool enable) { m_layerconfig.set_backdrops_enabled(enable); update_layer_config(); }
+//	void set_overlays_enabled(bool enable) { m_layerconfig.set_overlays_enabled(enable); update_layer_config(); }
+//	void set_bezels_enabled(bool enable) { m_layerconfig.set_bezels_enabled(enable); update_layer_config(); }
+//	void set_cpanels_enabled(bool enable) { m_layerconfig.set_cpanels_enabled(enable); update_layer_config(); }
+//	void set_marquees_enabled(bool enable) { m_layerconfig.set_marquees_enabled(enable); update_layer_config(); }
+//	void set_screen_overlay_enabled(bool enable) { m_layerconfig.set_screen_overlay_enabled(enable); update_layer_config(); }
+//	void set_zoom_to_screen(bool zoom) { m_layerconfig.set_zoom_to_screen(zoom); update_layer_config(); }
 
 	// view configuration helper
-	int configured_view(const char *viewname, int targetindex, int numtargets);
+//	int configured_view(const char *viewname, int targetindex, int numtargets);
 
 	// view information
-	const char *view_name(int viewindex);
-	const render_screen_list &view_screens(int viewindex);
+//	const char *view_name(int viewindex);
+//	const render_screen_list &view_screens(int viewindex);
 
 	// bounds computations
 	void compute_visible_area(INT32 target_width, INT32 target_height, float target_pixel_aspect, int target_orientation, INT32 &visible_width, INT32 &visible_height);
@@ -663,11 +663,11 @@ public:
 
 private:
 	// internal helpers
-	void update_layer_config();
-	void load_layout_files(const char *layoutfile, bool singlefile);
-	bool load_layout_file(const char *dirname, const char *filename);
+//	void update_layer_config();
+//	void load_layout_files(const char *layoutfile, bool singlefile);
+//	bool load_layout_file(const char *dirname, const char *filename);
 	void add_container_primitives(render_primitive_list &list, const object_transform &xform, render_container &container, int blendmode);
-	void add_element_primitives(render_primitive_list &list, const object_transform &xform, layout_element &element, int state, int blendmode);
+//	void add_element_primitives(render_primitive_list &list, const object_transform &xform, layout_element &element, int state, int blendmode);
 	bool map_point_internal(INT32 target_x, INT32 target_y, render_container *container, float &mapped_x, float &mapped_y, const char *&mapped_input_tag, ioport_value &mapped_input_mask);
 
 	// config callbacks
@@ -675,8 +675,8 @@ private:
 	bool config_save(xml_data_node &targetnode);
 
 	// view lookups
-	layout_view *view_by_index(int index) const;
-	int view_index(layout_view &view) const;
+//	layout_view *view_by_index(int index) const;
+//	int view_index(layout_view &view) const;
 
 	// optimized clearing
 	void init_clear_extents();
@@ -691,8 +691,8 @@ private:
 	// internal state
 	render_target *         m_next;                     // link to next target
 	render_manager &        m_manager;                  // reference to our owning manager
-	layout_view *           m_curview;                  // current view
-	simple_list<layout_file> m_filelist;                // list of layout files
+//	layout_view *           m_curview;                  // current view
+//	simple_list<layout_file> m_filelist;                // list of layout files
 	UINT32                  m_flags;                    // creation flags
 	render_primitive_list   m_primlist[NUM_PRIMLISTS];  // list of primitives
 	int                     m_listindex;                // index of next primlist to use
@@ -703,7 +703,7 @@ private:
 	float                   m_max_refresh;              // maximum refresh rate, 0 or if none
 	int                     m_orientation;              // orientation
 	render_layer_config     m_layerconfig;              // layer configuration
-	layout_view *           m_base_view;                // the view at the time of first frame
+//	layout_view *           m_base_view;                // the view at the time of first frame
 	int                     m_base_orientation;         // the orientation at the time of first frame
 	render_layer_config     m_base_layerconfig;         // the layer configuration at the time of first frame
 	int                     m_maxtexwidth;              // maximum width of a texture
@@ -742,20 +742,20 @@ public:
 	render_target *target_by_index(int index) const;
 
 	// UI targets
-	render_target &ui_target() const { assert(m_ui_target != NULL); return *m_ui_target; }
-	void set_ui_target(render_target &target) { m_ui_target = &target; }
-	float ui_aspect();
+//	render_target &ui_target() const { assert(m_ui_target != NULL); return *m_ui_target; }
+//	void set_ui_target(render_target &target) { m_ui_target = &target; }
+//	float ui_aspect();
 
 	// UI containers
-	render_container &ui_container() const { assert(m_ui_container != NULL); return *m_ui_container; }
+//	render_container &ui_container() const { assert(m_ui_container != NULL); return *m_ui_container; }
 
 	// textures
 	render_texture *texture_alloc(texture_scaler_func scaler = NULL, void *param = NULL);
 	void texture_free(render_texture *texture);
 
 	// fonts
-	render_font *font_alloc(const char *filename = NULL);
-	void font_free(render_font *font);
+//	render_font *font_alloc(const char *filename = NULL);
+//	void font_free(render_font *font);
 
 	// reference tracking
 	void invalidate_all(void *refptr);

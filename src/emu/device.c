@@ -412,7 +412,7 @@ void device_t::start()
 	// if we're debugging, create a device_debug object
 	if ((machine().debug_flags & DEBUG_FLAG_ENABLED) != 0)
 	{
-		m_debug.reset(global_alloc(device_debug(*this)));
+//		m_debug.reset(global_alloc(device_debug(*this)));
 		debug_setup();
 	}
 
@@ -444,7 +444,7 @@ void device_t::stop()
 		intf->interface_post_stop();
 
 	// free any debugging info
-	m_debug.reset();
+//	m_debug.reset();
 
 	// we're now officially stopped, and the machine is off-limits
 	m_started = false;

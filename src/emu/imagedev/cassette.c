@@ -359,7 +359,7 @@ void cassette_image_device::call_unload()
 void cassette_image_device::call_display()
 {
 	char buf[65];
-	float x, y;
+   float y;
 	int n;
 	double position, length;
 	cassette_state uistate;
@@ -378,14 +378,14 @@ void cassette_image_device::call_display()
 	uistate = (cassette_state)(get_state() & CASSETTE_MASK_UISTATE);
 
 	/* choose a location on the screen */
-	x = 0.2f;
+//	x = 0.2f;
 	y = 0.5f;
 
 	cassette_device_iterator iter(device().machine().root_device());
 	for (dev = iter.first(); dev != NULL && strcmp( dev->tag(), device().tag() ); dev = iter.next())
 		y += 1;
 
-	y *= device().machine().ui().get_line_height() + 2.0f * UI_BOX_TB_BORDER;
+//	y *= device().machine().ui().get_line_height() + 2.0f * UI_BOX_TB_BORDER;
 	/* choose which frame of the animation we are at */
 	n = ((int) position / ANIMATION_FPS) % ANIMATION_FRAMES;
 	/* Since you can have anything in a BDF file, we will use crude ascii characters instead */
@@ -410,7 +410,8 @@ void cassette_image_device::call_display()
 		(int) length);
 
 	// draw the cassette
-	device().machine().ui().draw_text_box(&device().machine().render().ui_container(), buf, JUSTIFY_LEFT, x, y, UI_BACKGROUND_COLOR);
+   printf("%s\n",buf);
+//	device().machine().ui().draw_text_box(&device().machine().render().ui_container(), buf, JUSTIFY_LEFT, x, y, UI_BACKGROUND_COLOR);
 
 	// make sure tape stops at end when playing
 	if ((m_state & CASSETTE_MASK_UISTATE) == CASSETTE_PLAY)

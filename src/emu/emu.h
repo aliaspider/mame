@@ -56,7 +56,7 @@ typedef device_t * (*machine_config_constructor)(machine_config &config, device_
 #include "output.h"
 
 // diimage requires uimenu
-#include "ui/menu.h"
+//#include "ui/menu.h"
 
 // devices and callbacks
 #include "device.h"
@@ -91,7 +91,7 @@ typedef device_t * (*machine_config_constructor)(machine_config &config, device_
 #include "image.h"
 
 // networking
-#include "network.h"
+//#include "network.h"
 
 // lua engine
 //#include "luaengine.h"

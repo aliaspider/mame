@@ -72,16 +72,16 @@
 #include "emuopts.h"
 #include "osdepend.h"
 #include "config.h"
-#include "debugger.h"
+//#include "debugger.h"
 #include "render.h"
 #include "cheat.h"
-#include "ui/selgame.h"
-#include "uiinput.h"
+//#include "ui/selgame.h"
+//#include "uiinput.h"
 #include "crsshair.h"
 #include "validity.h"
 #include "unzip.h"
-#include "debug/debugcon.h"
-#include "debug/debugvw.h"
+//#include "debug/debugcon.h"
+//#include "debug/debugvw.h"
 
 #include <time.h>
 
@@ -226,7 +226,7 @@ void running_machine::start()
 
 	// create the video manager
 	m_video.reset(global_alloc(video_manager(*this)));
-	m_ui.reset(global_alloc(ui_manager(*this)));
+//	m_ui.reset(global_alloc(ui_manager(*this)));
 
 	// initialize the base time (needed for doing record/playback)
 	::time(&m_base_time);
@@ -239,7 +239,7 @@ void running_machine::start()
 		m_base_time = newbase;
 
 	// intialize UI input
-	ui_input_init(*this);
+//	ui_input_init(*this);
 
 	// initialize the streams engine before the sound devices start
 	m_sound.reset(global_alloc(sound_manager(*this)));
@@ -260,16 +260,16 @@ void running_machine::start()
 	image_init(*this);
 	m_tilemap.reset(global_alloc(tilemap_manager(*this)));
 	crosshair_init(*this);
-	network_init(*this);
+//	network_init(*this);
 
 	// initialize the debugger
-	if ((debug_flags & DEBUG_FLAG_ENABLED) != 0)
-		debugger_init(*this);
+//	if ((debug_flags & DEBUG_FLAG_ENABLED) != 0)
+//		debugger_init(*this);
 
 	// call the game driver's init function
 	// this is where decryption is done and memory maps are altered
 	// so this location in the init order is important
-	ui().set_startup_text("Initializing...", true);
+//	ui().set_startup_text("Initializing...", true);
 
 	// register callbacks for the devices, then start them
 	add_notifier(MACHINE_NOTIFY_RESET, machine_notify_delegate(FUNC(running_machine::reset_all_devices), this));
@@ -288,7 +288,7 @@ void running_machine::start()
 		schedule_load("auto");
 
 	// set up the cheat engine
-	m_cheat.reset(global_alloc(cheat_manager(*this)));
+//	m_cheat.reset(global_alloc(cheat_manager(*this)));
 
 	// allocate autoboot timer
 	m_autoboot_timer = scheduler().timer_alloc(timer_expired_delegate(FUNC(running_machine::autoboot_callback), this));
@@ -342,7 +342,8 @@ int running_machine::run(bool firstrun)
 		start();
 
 		// load the configuration settings and NVRAM
-		bool settingsloaded = config_load_settings(*this);
+//		bool settingsloaded =
+            config_load_settings(*this);
 
 		// disallow save state registrations starting here.
 		// Don't do it earlier, config load can create network
@@ -353,10 +354,10 @@ int running_machine::run(bool firstrun)
 		sound().ui_mute(false);
 
 		// initialize ui lists
-		ui().initialize(*this);
+//		ui().initialize(*this);
 
 		// display the startup screens
-		ui().display_startup_screens(firstrun, !settingsloaded);
+//		ui().display_startup_screens(firstrun, !settingsloaded);
 
 		// perform a soft reset -- this takes us to the running phase
 		soft_reset();
@@ -1134,8 +1135,8 @@ void running_machine::reset_all_devices()
 void running_machine::stop_all_devices()
 {
 	// first let the debugger save comments
-	if ((debug_flags & DEBUG_FLAG_ENABLED) != 0)
-		debug_comment_save(*this);
+//	if ((debug_flags & DEBUG_FLAG_ENABLED) != 0)
+//		debug_comment_save(*this);
 
 	// iterate over devices and stop them
 	device_iterator iter(root_device());

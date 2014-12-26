@@ -39,8 +39,8 @@
 #include "emu.h"
 #include "emuopts.h"
 #include "render.h"
-#include "rendfont.h"
-#include "rendlay.h"
+//#include "rendfont.h"
+//#include "rendlay.h"
 #include "rendutil.h"
 #include "config.h"
 #include "drivenum.h"
@@ -116,8 +116,8 @@ static const render_quad_texuv oriented_texcoords[8] =
 };
 
 // layer orders
-static const int layer_order_standard[] = { ITEM_LAYER_SCREEN, ITEM_LAYER_OVERLAY, ITEM_LAYER_BACKDROP, ITEM_LAYER_BEZEL, ITEM_LAYER_CPANEL, ITEM_LAYER_MARQUEE };
-static const int layer_order_alternate[] = { ITEM_LAYER_BACKDROP, ITEM_LAYER_SCREEN, ITEM_LAYER_OVERLAY, ITEM_LAYER_BEZEL, ITEM_LAYER_CPANEL, ITEM_LAYER_MARQUEE };
+//static const int layer_order_standard[] = { ITEM_LAYER_SCREEN, ITEM_LAYER_OVERLAY, ITEM_LAYER_BACKDROP, ITEM_LAYER_BEZEL, ITEM_LAYER_CPANEL, ITEM_LAYER_MARQUEE };
+//static const int layer_order_alternate[] = { ITEM_LAYER_BACKDROP, ITEM_LAYER_SCREEN, ITEM_LAYER_OVERLAY, ITEM_LAYER_BEZEL, ITEM_LAYER_CPANEL, ITEM_LAYER_MARQUEE };
 
 
 
@@ -174,32 +174,32 @@ inline void normalize_bounds(render_bounds &bounds)
 //  appropriate layer index and blendmode
 //-------------------------------------------------
 
-inline item_layer get_layer_and_blendmode(const layout_view &view, int index, int &blendmode)
-{
-	//  if we have multiple backdrop pieces and no overlays, render:
-	//      backdrop (add) + screens (add) + bezels (alpha) + cpanels (alpha) + marquees (alpha)
-	//  else render:
-	//      screens (add) + overlays (RGB multiply) + backdrop (add) + bezels (alpha) + cpanels (alpha) + marquees (alpha)
+//inline item_layer get_layer_and_blendmode(const layout_view &view, int index, int &blendmode)
+//{
+//	//  if we have multiple backdrop pieces and no overlays, render:
+//	//      backdrop (add) + screens (add) + bezels (alpha) + cpanels (alpha) + marquees (alpha)
+//	//  else render:
+//	//      screens (add) + overlays (RGB multiply) + backdrop (add) + bezels (alpha) + cpanels (alpha) + marquees (alpha)
 
-	const int *layer_order = layer_order_standard;
-	if (view.first_item(ITEM_LAYER_BACKDROP) != NULL && view.first_item(ITEM_LAYER_BACKDROP)->next() != NULL && view.first_item(ITEM_LAYER_OVERLAY) == NULL)
-		layer_order = layer_order_alternate;
+//	const int *layer_order = layer_order_standard;
+//	if (view.first_item(ITEM_LAYER_BACKDROP) != NULL && view.first_item(ITEM_LAYER_BACKDROP)->next() != NULL && view.first_item(ITEM_LAYER_OVERLAY) == NULL)
+//		layer_order = layer_order_alternate;
 
-	// select the layer
-	int layer = layer_order[index];
+//	// select the layer
+//	int layer = layer_order[index];
 
-	// pick a blendmode
-	if (layer == ITEM_LAYER_SCREEN && layer_order == layer_order_standard)
-		blendmode = -1;
-	else if (layer == ITEM_LAYER_SCREEN || (layer == ITEM_LAYER_BACKDROP && layer_order == layer_order_standard))
-		blendmode = BLENDMODE_ADD;
-	else if (layer == ITEM_LAYER_OVERLAY)
-		blendmode = BLENDMODE_RGB_MULTIPLY;
-	else
-		blendmode = BLENDMODE_ALPHA;
+//	// pick a blendmode
+//	if (layer == ITEM_LAYER_SCREEN && layer_order == layer_order_standard)
+//		blendmode = -1;
+//	else if (layer == ITEM_LAYER_SCREEN || (layer == ITEM_LAYER_BACKDROP && layer_order == layer_order_standard))
+//		blendmode = BLENDMODE_ADD;
+//	else if (layer == ITEM_LAYER_OVERLAY)
+//		blendmode = BLENDMODE_RGB_MULTIPLY;
+//	else
+//		blendmode = BLENDMODE_ALPHA;
 
-	return item_layer(layer);
-}
+//	return item_layer(layer);
+//}
 
 
 
@@ -676,20 +676,20 @@ void render_container::add_quad(float x0, float y0, float x1, float y1, rgb_t ar
 //  add_char - add a char item to this container
 //-------------------------------------------------
 
-void render_container::add_char(float x0, float y0, float height, float aspect, rgb_t argb, render_font &font, UINT16 ch)
-{
-	// compute the bounds of the character cell and get the texture
-	render_bounds bounds;
-	bounds.x0 = x0;
-	bounds.y0 = y0;
-	render_texture *texture = font.get_char_texture_and_bounds(height, aspect, ch, bounds);
+//void render_container::add_char(float x0, float y0, float height, float aspect, rgb_t argb, render_font &font, UINT16 ch)
+//{
+//	// compute the bounds of the character cell and get the texture
+//	render_bounds bounds;
+//	bounds.x0 = x0;
+//	bounds.y0 = y0;
+//	render_texture *texture = font.get_char_texture_and_bounds(height, aspect, ch, bounds);
 
-	// add it like a quad
-	item &newitem = add_generic(CONTAINER_ITEM_QUAD, bounds.x0, bounds.y0, bounds.x1, bounds.y1, argb);
-	newitem.m_texture = texture;
-	newitem.m_flags = PRIMFLAG_TEXORIENT(ROT0) | PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA);
-	newitem.m_internal = INTERNAL_FLAG_CHAR;
-}
+//	// add it like a quad
+//	item &newitem = add_generic(CONTAINER_ITEM_QUAD, bounds.x0, bounds.y0, bounds.x1, bounds.y1, argb);
+//	newitem.m_texture = texture;
+//	newitem.m_flags = PRIMFLAG_TEXORIENT(ROT0) | PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA);
+//	newitem.m_internal = INTERNAL_FLAG_CHAR;
+//}
 
 
 //-------------------------------------------------
@@ -910,7 +910,7 @@ render_container::user_settings::user_settings()
 render_target::render_target(render_manager &manager, const char *layoutfile, UINT32 flags)
 	: m_next(NULL),
 		m_manager(manager),
-		m_curview(NULL),
+//		m_curview(NULL),
 		m_flags(flags),
 		m_listindex(0),
 		m_width(640),
@@ -918,7 +918,7 @@ render_target::render_target(render_manager &manager, const char *layoutfile, UI
 		m_pixel_aspect(0.0f),
 		m_max_refresh(0),
 		m_orientation(0),
-		m_base_view(NULL),
+//		m_base_view(NULL),
 		m_base_orientation(ROT0),
 		m_maxtexwidth(65536),
 		m_maxtexheight(65536)
@@ -953,14 +953,14 @@ render_target::render_target(render_manager &manager, const char *layoutfile, UI
 	m_layerconfig = m_base_layerconfig;
 
 	// load the layout files
-	load_layout_files(layoutfile, flags & RENDER_CREATE_SINGLE_FILE);
+//	load_layout_files(layoutfile, flags & RENDER_CREATE_SINGLE_FILE);
 
 	// set the current view to the first one
-	set_view(0);
+//	set_view(0);
 
 	// make us the UI target if there is none
-	if (!hidden() && manager.m_ui_target == NULL)
-		manager.set_ui_target(*this);
+//	if (!hidden() && manager.m_ui_target == NULL)
+//		manager.set_ui_target(*this);
 }
 
 
@@ -978,10 +978,10 @@ render_target::~render_target()
 //  UI target
 //-------------------------------------------------
 
-bool render_target::is_ui_target() const
-{
-	return (this == &m_manager.ui_target());
-}
+//bool render_target::is_ui_target() const
+//{
+//	return (this == &m_manager.ui_target());
+//}
 
 
 //-------------------------------------------------
@@ -1015,15 +1015,15 @@ void render_target::set_bounds(INT32 width, INT32 height, float pixel_aspect)
 //  a target
 //-------------------------------------------------
 
-void render_target::set_view(int viewindex)
-{
-	layout_view *view = view_by_index(viewindex);
-	if (view != NULL)
-	{
-		m_curview = view;
-		view->recompute(m_layerconfig);
-	}
-}
+//void render_target::set_view(int viewindex)
+//{
+//	layout_view *view = view_by_index(viewindex);
+//   if (view != NULL)
+//   {
+//      m_curview = view;
+//		view->recompute(m_layerconfig);
+//   }
+//}
 
 
 //-------------------------------------------------
@@ -1043,80 +1043,80 @@ void render_target::set_max_texture_size(int maxwidth, int maxheight)
 //  target based on the configuration parameters
 //-------------------------------------------------
 
-int render_target::configured_view(const char *viewname, int targetindex, int numtargets)
-{
-	layout_view *view = NULL;
-	int viewindex;
+//int render_target::configured_view(const char *viewname, int targetindex, int numtargets)
+//{
+//	layout_view *view = NULL;
+//	int viewindex;
 
-	// auto view just selects the nth view
-	if (strcmp(viewname, "auto") != 0)
-	{
-		// scan for a matching view name
-		for (view = view_by_index(viewindex = 0); view != NULL; view = view_by_index(++viewindex))
-			if (core_strnicmp(view->name(), viewname, strlen(viewname)) == 0)
-				break;
-	}
+//	// auto view just selects the nth view
+//	if (strcmp(viewname, "auto") != 0)
+//	{
+//		// scan for a matching view name
+//		for (view = view_by_index(viewindex = 0); view != NULL; view = view_by_index(++viewindex))
+//			if (core_strnicmp(view->name(), viewname, strlen(viewname)) == 0)
+//				break;
+//	}
 
-	// if we don't have a match, default to the nth view
-	screen_device_iterator iter(m_manager.machine().root_device());
-	int scrcount = iter.count();
-	if (view == NULL && scrcount > 0)
-	{
-		// if we have enough targets to be one per screen, assign in order
-		if (numtargets >= scrcount)
-		{
-			int ourindex = index() % scrcount;
-			screen_device *screen = iter.byindex(ourindex);
+//	// if we don't have a match, default to the nth view
+//	screen_device_iterator iter(m_manager.machine().root_device());
+//	int scrcount = iter.count();
+//	if (view == NULL && scrcount > 0)
+//	{
+//		// if we have enough targets to be one per screen, assign in order
+//		if (numtargets >= scrcount)
+//		{
+//			int ourindex = index() % scrcount;
+//			screen_device *screen = iter.byindex(ourindex);
 
-			// find the first view with this screen and this screen only
-			for (view = view_by_index(viewindex = 0); view != NULL; view = view_by_index(++viewindex))
-			{
-				const render_screen_list &viewscreens = view->screens();
-				if (viewscreens.count() == 0)
-				{
-					view = NULL;
-					break;
-				}
-				else if (viewscreens.count() == viewscreens.contains(*screen))
-					break;
-			}
-		}
+//			// find the first view with this screen and this screen only
+//			for (view = view_by_index(viewindex = 0); view != NULL; view = view_by_index(++viewindex))
+//			{
+//				const render_screen_list &viewscreens = view->screens();
+//				if (viewscreens.count() == 0)
+//				{
+//					view = NULL;
+//					break;
+//				}
+//				else if (viewscreens.count() == viewscreens.contains(*screen))
+//					break;
+//			}
+//		}
 
-		// otherwise, find the first view that has all the screens
-		if (view == NULL)
-		{
-			for (view = view_by_index(viewindex = 0); view != NULL; view = view_by_index(++viewindex))
-			{
-				const render_screen_list &viewscreens = view->screens();
-				if (viewscreens.count() == 0)
-					break;
-				if (viewscreens.count() >= scrcount)
-				{
-					screen_device *screen;
-					for (screen = iter.first(); screen != NULL; screen = iter.next())
-						if (!viewscreens.contains(*screen))
-							break;
-					if (screen == NULL)
-						break;
-				}
-			}
-		}
-	}
+//		// otherwise, find the first view that has all the screens
+//		if (view == NULL)
+//		{
+//			for (view = view_by_index(viewindex = 0); view != NULL; view = view_by_index(++viewindex))
+//			{
+//				const render_screen_list &viewscreens = view->screens();
+//				if (viewscreens.count() == 0)
+//					break;
+//				if (viewscreens.count() >= scrcount)
+//				{
+//					screen_device *screen;
+//					for (screen = iter.first(); screen != NULL; screen = iter.next())
+//						if (!viewscreens.contains(*screen))
+//							break;
+//					if (screen == NULL)
+//						break;
+//				}
+//			}
+//		}
+//	}
 
-	// make sure it's a valid view
-	return (view != NULL) ? view_index(*view) : 0;
-}
+//	// make sure it's a valid view
+//	return (view != NULL) ? view_index(*view) : 0;
+//}
 
 
 //-------------------------------------------------
 //  view_name - return the name of the given view
 //-------------------------------------------------
 
-const char *render_target::view_name(int viewindex)
-{
-	layout_view *view = view_by_index(viewindex);
-	return (view != NULL) ? view->name() : NULL;
-}
+//const char *render_target::view_name(int viewindex)
+//{
+//	layout_view *view = view_by_index(viewindex);
+//	return (view != NULL) ? view->name() : NULL;
+//}
 
 
 //-------------------------------------------------
@@ -1125,11 +1125,11 @@ const char *render_target::view_name(int viewindex)
 //  given view
 //-------------------------------------------------
 
-const render_screen_list &render_target::view_screens(int viewindex)
-{
-	layout_view *view = view_by_index(viewindex);
-	return (view != NULL) ? view->screens() : s_empty_screen_list;
-}
+//const render_screen_list &render_target::view_screens(int viewindex)
+//{
+//	layout_view *view = view_by_index(viewindex);
+//	return (view != NULL) ? view->screens() : s_empty_screen_list;
+//}
 
 
 //-------------------------------------------------
@@ -1147,7 +1147,7 @@ void render_target::compute_visible_area(INT32 target_width, INT32 target_height
 	if (target_pixel_aspect != 0.0f)
 	{
 		// start with the aspect ratio of the square pixel layout
-		width = m_curview->effective_aspect(m_layerconfig);
+      width = 1.0; // m_curview->effective_aspect(m_layerconfig);
 		height = 1.0f;
 
 		// first apply target orientation
@@ -1198,44 +1198,44 @@ void render_target::compute_minimum_size(INT32 &minwidth, INT32 &minheight)
 		return;
 	}
 
-	if (m_curview == NULL)
-		throw emu_fatalerror("Mandatory artwork is missing");
+//	if (m_curview == NULL)
+//		throw emu_fatalerror("Mandatory artwork is missing");
 
 	// scan the current view for all screens
-	for (item_layer layer = ITEM_LAYER_FIRST; layer < ITEM_LAYER_MAX; layer++)
+//	for (item_layer layer = ITEM_LAYER_FIRST; layer < ITEM_LAYER_MAX; layer++)
 
-		// iterate over items in the layer
-		for (layout_view::item *curitem = m_curview->first_item(layer); curitem != NULL; curitem = curitem->next())
-			if (curitem->screen() != NULL)
-			{
-				// use a hard-coded default visible area for vector screens
-				screen_device *screen = curitem->screen();
-				const rectangle vectorvis(0, 639, 0, 479);
-				const rectangle &visarea = (screen->screen_type() == SCREEN_TYPE_VECTOR) ? vectorvis : screen->visible_area();
+//		// iterate over items in the layer
+//		for (layout_view::item *curitem = m_curview->first_item(layer); curitem != NULL; curitem = curitem->next())
+//			if (curitem->screen() != NULL)
+//			{
+//				// use a hard-coded default visible area for vector screens
+//				screen_device *screen = curitem->screen();
+//				const rectangle vectorvis(0, 639, 0, 479);
+//				const rectangle &visarea = (screen->screen_type() == SCREEN_TYPE_VECTOR) ? vectorvis : screen->visible_area();
 
-				// apply target orientation to the bounds
-				render_bounds bounds = curitem->bounds();
-				apply_orientation(bounds, m_orientation);
-				normalize_bounds(bounds);
+//				// apply target orientation to the bounds
+//				render_bounds bounds = curitem->bounds();
+//				apply_orientation(bounds, m_orientation);
+//				normalize_bounds(bounds);
 
-				// based on the orientation of the screen container, check the bitmap
-				float xscale, yscale;
-				if (!(orientation_add(m_orientation, screen->container().orientation()) & ORIENTATION_SWAP_XY))
-				{
-					xscale = float(visarea.width()) / bounds.width();
-					yscale = float(visarea.height()) / bounds.height();
-				}
-				else
-				{
-					xscale = float(visarea.height()) / bounds.width();
-					yscale = float(visarea.width()) / bounds.height();
-				}
+//				// based on the orientation of the screen container, check the bitmap
+//				float xscale, yscale;
+//				if (!(orientation_add(m_orientation, screen->container().orientation()) & ORIENTATION_SWAP_XY))
+//				{
+//					xscale = float(visarea.width()) / bounds.width();
+//					yscale = float(visarea.height()) / bounds.height();
+//				}
+//				else
+//				{
+//					xscale = float(visarea.height()) / bounds.width();
+//					yscale = float(visarea.width()) / bounds.height();
+//				}
 
-				// pick the greater
-				maxxscale = MAX(xscale, maxxscale);
-				maxyscale = MAX(yscale, maxyscale);
-				screens_considered++;
-			}
+//				// pick the greater
+//				maxxscale = MAX(xscale, maxxscale);
+//				maxyscale = MAX(yscale, maxyscale);
+//				screens_considered++;
+//			}
 
 	// if there were no screens considered, pick a nominal default
 	if (screens_considered == 0)
@@ -1258,8 +1258,8 @@ void render_target::compute_minimum_size(INT32 &minwidth, INT32 &minheight)
 render_primitive_list &render_target::get_primitives()
 {
 	// remember the base values if this is the first frame
-	if (m_base_view == NULL)
-		m_base_view = m_curview;
+//	if (m_base_view == NULL)
+//		m_base_view = m_curview;
 
 	// switch to the next primitive list
 	render_primitive_list &list = m_primlist[m_listindex];
@@ -1284,46 +1284,47 @@ render_primitive_list &render_target::get_primitives()
 	root_xform.no_center = false;
 
 	// iterate over layers back-to-front, but only if we're running
-	if (m_manager.machine().phase() >= MACHINE_PHASE_RESET)
-		for (item_layer layernum = ITEM_LAYER_FIRST; layernum < ITEM_LAYER_MAX; layernum++)
-		{
-			int blendmode;
-			item_layer layer = get_layer_and_blendmode(*m_curview, layernum, blendmode);
-			if (m_curview->layer_enabled(layer))
-			{
-				// iterate over items in the layer
-				for (layout_view::item *curitem = m_curview->first_item(layer); curitem != NULL; curitem = curitem->next())
-				{
-					// first apply orientation to the bounds
-					render_bounds bounds = curitem->bounds();
-					apply_orientation(bounds, root_xform.orientation);
-					normalize_bounds(bounds);
+//	if (m_manager.machine().phase() >= MACHINE_PHASE_RESET)
+//		for (item_layer layernum = ITEM_LAYER_FIRST; layernum < ITEM_LAYER_MAX; layernum++)
+//		{
+//			int blendmode;
+//			item_layer layer = get_layer_and_blendmode(*m_curview, layernum, blendmode);
+//			if (m_curview->layer_enabled(layer))
+//			{
+//				// iterate over items in the layer
+//				for (layout_view::item *curitem = m_curview->first_item(layer); curitem != NULL; curitem = curitem->next())
+//				{
+//					// first apply orientation to the bounds
+//					render_bounds bounds = curitem->bounds();
+//					apply_orientation(bounds, root_xform.orientation);
+//					normalize_bounds(bounds);
 
-					// apply the transform to the item
-					object_transform item_xform;
-					item_xform.xoffs = root_xform.xoffs + bounds.x0 * root_xform.xscale;
-					item_xform.yoffs = root_xform.yoffs + bounds.y0 * root_xform.yscale;
-					item_xform.xscale = (bounds.x1 - bounds.x0) * root_xform.xscale;
-					item_xform.yscale = (bounds.y1 - bounds.y0) * root_xform.yscale;
-					item_xform.color.r = curitem->color().r * root_xform.color.r;
-					item_xform.color.g = curitem->color().g * root_xform.color.g;
-					item_xform.color.b = curitem->color().b * root_xform.color.b;
-					item_xform.color.a = curitem->color().a * root_xform.color.a;
-					item_xform.orientation = orientation_add(curitem->orientation(), root_xform.orientation);
-					item_xform.no_center = false;
+//					// apply the transform to the item
+//					object_transform item_xform;
+//					item_xform.xoffs = root_xform.xoffs + bounds.x0 * root_xform.xscale;
+//					item_xform.yoffs = root_xform.yoffs + bounds.y0 * root_xform.yscale;
+//					item_xform.xscale = (bounds.x1 - bounds.x0) * root_xform.xscale;
+//					item_xform.yscale = (bounds.y1 - bounds.y0) * root_xform.yscale;
+//					item_xform.color.r = curitem->color().r * root_xform.color.r;
+//					item_xform.color.g = curitem->color().g * root_xform.color.g;
+//					item_xform.color.b = curitem->color().b * root_xform.color.b;
+//					item_xform.color.a = curitem->color().a * root_xform.color.a;
+//					item_xform.orientation = orientation_add(curitem->orientation(), root_xform.orientation);
+//					item_xform.no_center = false;
 
-					// if there is no associated element, it must be a screen element
-					if (curitem->screen() != NULL)
-						add_container_primitives(list, item_xform, curitem->screen()->container(), blendmode);
-					else
-						add_element_primitives(list, item_xform, *curitem->element(), curitem->state(), blendmode);
-				}
-			}
-		}
+//					// if there is no associated element, it must be a screen element
+//					if (curitem->screen() != NULL)
+//						add_container_primitives(list, item_xform, curitem->screen()->container(), blendmode);
+//					else
+//						add_element_primitives(list, item_xform, *curitem->element(), curitem->state(), blendmode);
+//				}
+//			}
+//		}
 
 	// if we are not in the running stage, draw an outer box
-	else
-	{
+//	else
+   if (m_manager.machine().phase() < MACHINE_PHASE_RESET)
+   {
 		render_primitive *prim = list.alloc(render_primitive::QUAD);
 		set_render_bounds_xy(&prim->bounds, 0.0f, 0.0f, (float)m_width, (float)m_height);
 		set_render_color(&prim->color, 1.0f, 1.0f, 1.0f, 1.0f);
@@ -1360,21 +1361,21 @@ render_primitive_list &render_target::get_primitives()
 	}
 
 	// process the UI if we are the UI target
-	if (is_ui_target())
-	{
-		// compute the transform for the UI
-		object_transform ui_xform;
-		ui_xform.xoffs = 0;
-		ui_xform.yoffs = 0;
-		ui_xform.xscale = (float) m_width;
-		ui_xform.yscale = (float) m_height;
-		ui_xform.color.r = ui_xform.color.g = ui_xform.color.b = ui_xform.color.a = 1.0f;
-		ui_xform.orientation = m_orientation;
-		ui_xform.no_center = false;
+//	if (is_ui_target())
+//	{
+//		// compute the transform for the UI
+//		object_transform ui_xform;
+//		ui_xform.xoffs = 0;
+//		ui_xform.yoffs = 0;
+//		ui_xform.xscale = (float) m_width;
+//		ui_xform.yscale = (float) m_height;
+//		ui_xform.color.r = ui_xform.color.g = ui_xform.color.b = ui_xform.color.a = 1.0f;
+//		ui_xform.orientation = m_orientation;
+//		ui_xform.no_center = false;
 
-		// add UI elements
-		add_container_primitives(list, ui_xform, m_manager.ui_container(), BLENDMODE_ALPHA);
-	}
+//		// add UI elements
+//		add_container_primitives(list, ui_xform, m_manager.ui_container(), BLENDMODE_ALPHA);
+//	}
 
 	// optimize the list before handing it off
 	add_clear_and_optimize_primitive_list(list);
@@ -1468,10 +1469,10 @@ void render_target::debug_top(render_container &container)
 //  config change
 //-------------------------------------------------
 
-void render_target::update_layer_config()
-{
-	m_curview->recompute(m_layerconfig);
-}
+//void render_target::update_layer_config()
+//{
+//	m_curview->recompute(m_layerconfig);
+//}
 
 
 //-------------------------------------------------
@@ -1479,77 +1480,77 @@ void render_target::update_layer_config()
 //  given render target
 //-------------------------------------------------
 
-void render_target::load_layout_files(const char *layoutfile, bool singlefile)
-{
-	bool have_default = false;
-	// if there's an explicit file, load that first
-	const char *basename = m_manager.machine().basename();
-	if (layoutfile != NULL)
-		have_default |= load_layout_file(basename, layoutfile);
+//void render_target::load_layout_files(const char *layoutfile, bool singlefile)
+//{
+//	bool have_default = false;
+//	// if there's an explicit file, load that first
+//	const char *basename = m_manager.machine().basename();
+//	if (layoutfile != NULL)
+//		have_default |= load_layout_file(basename, layoutfile);
 
-	// if we're only loading this file, we know our final result
-	if (singlefile)
-		return;
+//	// if we're only loading this file, we know our final result
+//	if (singlefile)
+//		return;
 
-	// try to load a file based on the driver name
-	const game_driver &system = m_manager.machine().system();
-	if (!load_layout_file(basename, system.name))
-		have_default |= load_layout_file(basename, "default");
-	else
-		have_default |= true;
+//	// try to load a file based on the driver name
+//	const game_driver &system = m_manager.machine().system();
+//	if (!load_layout_file(basename, system.name))
+//		have_default |= load_layout_file(basename, "default");
+//	else
+//		have_default |= true;
 
-	// if a default view has been specified, use that as a fallback
-	if (system.default_layout != NULL)
-		have_default |= load_layout_file(NULL, system.default_layout);
-	if (m_manager.machine().config().m_default_layout != NULL)
-		have_default |= load_layout_file(NULL, m_manager.machine().config().m_default_layout);
+//	// if a default view has been specified, use that as a fallback
+//	if (system.default_layout != NULL)
+//		have_default |= load_layout_file(NULL, system.default_layout);
+//	if (m_manager.machine().config().m_default_layout != NULL)
+//		have_default |= load_layout_file(NULL, m_manager.machine().config().m_default_layout);
 
-	// try to load another file based on the parent driver name
-	int cloneof = driver_list::clone(system);
-	if (cloneof != -1) {
-		if (!load_layout_file(driver_list::driver(cloneof).name, driver_list::driver(cloneof).name))
-			have_default |= load_layout_file(driver_list::driver(cloneof).name, "default");
-		else
-			have_default |= true;
-	}
-	screen_device_iterator iter(m_manager.machine().root_device());
-	int screens = iter.count();
-	// now do the built-in layouts for single-screen games
-	if (screens == 1)
-	{
-		if (system.flags & ORIENTATION_SWAP_XY)
-			load_layout_file(NULL, layout_vertical);
-		else
-			load_layout_file(NULL, layout_horizont);
-		assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
-	}
-	if (!have_default)
-	{
-		if (screens == 0)
-		{
-			load_layout_file(NULL, layout_noscreens);
-			assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
-		}
-		else
-		if (screens == 2)
-		{
-			load_layout_file(NULL, layout_dualhsxs);
-			assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
-		}
-		else
-		if (screens == 3)
-		{
-			load_layout_file(NULL, layout_triphsxs);
-			assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
-		}
-		else
-		if (screens == 4)
-		{
-			load_layout_file(NULL, layout_quadhsxs);
-			assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
-		}
-	}
-}
+//	// try to load another file based on the parent driver name
+//	int cloneof = driver_list::clone(system);
+//	if (cloneof != -1) {
+//		if (!load_layout_file(driver_list::driver(cloneof).name, driver_list::driver(cloneof).name))
+//			have_default |= load_layout_file(driver_list::driver(cloneof).name, "default");
+//		else
+//			have_default |= true;
+//	}
+//	screen_device_iterator iter(m_manager.machine().root_device());
+//	int screens = iter.count();
+//	// now do the built-in layouts for single-screen games
+//	if (screens == 1)
+//	{
+//		if (system.flags & ORIENTATION_SWAP_XY)
+//			load_layout_file(NULL, layout_vertical);
+//		else
+//			load_layout_file(NULL, layout_horizont);
+//		assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
+//	}
+//	if (!have_default)
+//	{
+//		if (screens == 0)
+//		{
+//			load_layout_file(NULL, layout_noscreens);
+//			assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
+//		}
+//		else
+//		if (screens == 2)
+//		{
+//			load_layout_file(NULL, layout_dualhsxs);
+//			assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
+//		}
+//		else
+//		if (screens == 3)
+//		{
+//			load_layout_file(NULL, layout_triphsxs);
+//			assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
+//		}
+//		else
+//		if (screens == 4)
+//		{
+//			load_layout_file(NULL, layout_quadhsxs);
+//			assert_always(m_filelist.count() > 0, "Couldn't parse default layout??");
+//		}
+//	}
+//}
 
 
 //-------------------------------------------------
@@ -1557,60 +1558,60 @@ void render_target::load_layout_files(const char *layoutfile, bool singlefile)
 //  and append it to our list
 //-------------------------------------------------
 
-bool render_target::load_layout_file(const char *dirname, const char *filename)
-{
-	// if the first character of the "file" is an open brace, assume it is an XML string
-	xml_data_node *rootnode;
-	if (filename[0] == '<')
-		rootnode = xml_string_read(filename, NULL);
+//bool render_target::load_layout_file(const char *dirname, const char *filename)
+//{
+//	// if the first character of the "file" is an open brace, assume it is an XML string
+//	xml_data_node *rootnode;
+//	if (filename[0] == '<')
+//		rootnode = xml_string_read(filename, NULL);
 
-	// otherwise, assume it is a file
-	else
-	{
-		// build the path and optionally prepend the directory
-		astring fname(filename, ".lay");
-		if (dirname != NULL)
-			fname.ins(0, PATH_SEPARATOR).ins(0, dirname);
+//	// otherwise, assume it is a file
+//	else
+//	{
+//		// build the path and optionally prepend the directory
+//		astring fname(filename, ".lay");
+//		if (dirname != NULL)
+//			fname.ins(0, PATH_SEPARATOR).ins(0, dirname);
 
-		// attempt to open the file; bail if we can't
-		emu_file layoutfile(manager().machine().options().art_path(), OPEN_FLAG_READ);
-		file_error filerr = layoutfile.open(fname);
-		if (filerr != FILERR_NONE)
-			return false;
+//		// attempt to open the file; bail if we can't
+//		emu_file layoutfile(manager().machine().options().art_path(), OPEN_FLAG_READ);
+//		file_error filerr = layoutfile.open(fname);
+//		if (filerr != FILERR_NONE)
+//			return false;
 
-		// read the file
-		rootnode = xml_file_read(layoutfile, NULL);
-	}
+//		// read the file
+//		rootnode = xml_file_read(layoutfile, NULL);
+//	}
 
-	// if we didn't get a properly-formatted XML file, record a warning and exit
-	if (rootnode == NULL)
-	{
-		if (filename[0] != '<')
-			osd_printf_warning("Improperly formatted XML file '%s', ignoring\n", filename);
-		else
-			osd_printf_warning("Improperly formatted XML string, ignoring\n");
-		return false;
-	}
+//	// if we didn't get a properly-formatted XML file, record a warning and exit
+//	if (rootnode == NULL)
+//	{
+//		if (filename[0] != '<')
+//			osd_printf_warning("Improperly formatted XML file '%s', ignoring\n", filename);
+//		else
+//			osd_printf_warning("Improperly formatted XML string, ignoring\n");
+//		return false;
+//	}
 
-	// parse and catch any errors
-	bool result = true;
-	try
-	{
-		m_filelist.append(*global_alloc(layout_file(m_manager.machine(), *rootnode, dirname)));
-	}
-	catch (emu_fatalerror &err)
-	{
-		if (filename[0] != '<')
-			osd_printf_warning("Error in XML file '%s': %s\n", filename, err.string());
-		else
-			osd_printf_warning("Error in XML string: %s\n", err.string());
-		result = false;
-	}
+//	// parse and catch any errors
+//	bool result = true;
+//	try
+//	{
+//		m_filelist.append(*global_alloc(layout_file(m_manager.machine(), *rootnode, dirname)));
+//	}
+//	catch (emu_fatalerror &err)
+//	{
+//		if (filename[0] != '<')
+//			osd_printf_warning("Error in XML file '%s': %s\n", filename, err.string());
+//		else
+//			osd_printf_warning("Error in XML string: %s\n", err.string());
+//		result = false;
+//	}
 
-	// free the root node
-	xml_file_free(rootnode);
-	return result;
-}
+//	// free the root node
+//	xml_file_free(rootnode);
+//	return result;
+//}
 
 
 //-------------------------------------------------
@@ -1802,54 +1803,54 @@ void render_target::add_container_primitives(render_primitive_list &list, const 
 //  for an element in the current state
 //-------------------------------------------------
 
-void render_target::add_element_primitives(render_primitive_list &list, const object_transform &xform, layout_element &element, int state, int blendmode)
-{
-	// if we're out of range, bail
-	if (state > element.maxstate())
-		return;
-	if (state < 0)
-		state = 0;
+//void render_target::add_element_primitives(render_primitive_list &list, const object_transform &xform, layout_element &element, int state, int blendmode)
+//{
+//	// if we're out of range, bail
+//	if (state > element.maxstate())
+//		return;
+//	if (state < 0)
+//		state = 0;
 
-	// get a pointer to the relevant texture
-	render_texture *texture = element.state_texture(state);
-	if (texture != NULL)
-	{
-		render_primitive *prim = list.alloc(render_primitive::QUAD);
+//	// get a pointer to the relevant texture
+//	render_texture *texture = element.state_texture(state);
+//	if (texture != NULL)
+//	{
+//		render_primitive *prim = list.alloc(render_primitive::QUAD);
 
-		// configure the basics
-		prim->color = xform.color;
-		prim->flags = PRIMFLAG_TEXORIENT(xform.orientation) | PRIMFLAG_BLENDMODE(blendmode) | PRIMFLAG_TEXFORMAT(texture->format());
+//		// configure the basics
+//		prim->color = xform.color;
+//		prim->flags = PRIMFLAG_TEXORIENT(xform.orientation) | PRIMFLAG_BLENDMODE(blendmode) | PRIMFLAG_TEXFORMAT(texture->format());
 
-		// compute the bounds
-		INT32 width = render_round_nearest(xform.xscale);
-		INT32 height = render_round_nearest(xform.yscale);
-		set_render_bounds_wh(&prim->bounds, render_round_nearest(xform.xoffs), render_round_nearest(xform.yoffs), (float) width, (float) height);
-		if (xform.orientation & ORIENTATION_SWAP_XY)
-			ISWAP(width, height);
-		width = MIN(width, m_maxtexwidth);
-		height = MIN(height, m_maxtexheight);
+//		// compute the bounds
+//		INT32 width = render_round_nearest(xform.xscale);
+//		INT32 height = render_round_nearest(xform.yscale);
+//		set_render_bounds_wh(&prim->bounds, render_round_nearest(xform.xoffs), render_round_nearest(xform.yoffs), (float) width, (float) height);
+//		if (xform.orientation & ORIENTATION_SWAP_XY)
+//			ISWAP(width, height);
+//		width = MIN(width, m_maxtexwidth);
+//		height = MIN(height, m_maxtexheight);
 
-		// get the scaled texture and append it
-		bool clipped = true;
-		if (texture->get_scaled(width, height, prim->texture, list))
-		{
-			// compute the clip rect
-			render_bounds cliprect;
-			cliprect.x0 = render_round_nearest(xform.xoffs);
-			cliprect.y0 = render_round_nearest(xform.yoffs);
-			cliprect.x1 = render_round_nearest(xform.xoffs + xform.xscale);
-			cliprect.y1 = render_round_nearest(xform.yoffs + xform.yscale);
-			sect_render_bounds(&cliprect, &m_bounds);
+//		// get the scaled texture and append it
+//		bool clipped = true;
+//		if (texture->get_scaled(width, height, prim->texture, list))
+//		{
+//			// compute the clip rect
+//			render_bounds cliprect;
+//			cliprect.x0 = render_round_nearest(xform.xoffs);
+//			cliprect.y0 = render_round_nearest(xform.yoffs);
+//			cliprect.x1 = render_round_nearest(xform.xoffs + xform.xscale);
+//			cliprect.y1 = render_round_nearest(xform.yoffs + xform.yscale);
+//			sect_render_bounds(&cliprect, &m_bounds);
 
-			// determine UV coordinates and apply clipping
-			prim->texcoords = oriented_texcoords[xform.orientation];
-			clipped = render_clip_quad(&prim->bounds, &cliprect, &prim->texcoords);
-		}
+//			// determine UV coordinates and apply clipping
+//			prim->texcoords = oriented_texcoords[xform.orientation];
+//			clipped = render_clip_quad(&prim->bounds, &cliprect, &prim->texcoords);
+//		}
 
-		// add to the list or free if we're clipped out
-		list.append_or_return(*prim, clipped);
-	}
-}
+//		// add to the list or free if we're clipped out
+//		list.append_or_return(*prim, clipped);
+//	}
+//}
 
 
 //-------------------------------------------------
@@ -1864,9 +1865,9 @@ bool render_target::map_point_internal(INT32 target_x, INT32 target_y, render_co
 	compute_visible_area(m_width, m_height, m_pixel_aspect, m_orientation, viswidth, visheight);
 
 	// create a root transform for the target
-	object_transform root_xform;
-	root_xform.xoffs = (float)(m_width - viswidth) / 2;
-	root_xform.yoffs = (float)(m_height - visheight) / 2;
+//	object_transform root_xform;
+//	root_xform.xoffs = (float)(m_width - viswidth) / 2;
+//	root_xform.yoffs = (float)(m_height - visheight) / 2;
 
 	// default to point not mapped
 	mapped_x = -1.0;
@@ -1875,59 +1876,59 @@ bool render_target::map_point_internal(INT32 target_x, INT32 target_y, render_co
 	mapped_input_mask = 0;
 
 	// convert target coordinates to float
-	float target_fx = (float)(target_x - root_xform.xoffs) / viswidth;
-	float target_fy = (float)(target_y - root_xform.yoffs) / visheight;
-	if (manager().machine().ui().is_menu_active())
-	{
-		target_fx = (float)target_x / m_width;
-		target_fy = (float)target_y / m_height;
-	}
+//	float target_fx = (float)(target_x - root_xform.xoffs) / viswidth;
+//	float target_fy = (float)(target_y - root_xform.yoffs) / visheight;
+//	if (manager().machine().ui().is_menu_active())
+//	{
+//		target_fx = (float)target_x / m_width;
+//		target_fy = (float)target_y / m_height;
+//	}
 	// explicitly check for the UI container
-	if (container != NULL && container == &m_manager.ui_container())
-	{
-		// this hit test went against the UI container
-		if (target_fx >= 0.0 && target_fx < 1.0 && target_fy >= 0.0 && target_fy < 1.0)
-		{
-			// this point was successfully mapped
-			mapped_x = (float)target_x / m_width;
-			mapped_y = (float)target_y / m_height;
-			return true;
-		}
-		return false;
-	}
+//	if (container != NULL && container == &m_manager.ui_container())
+//	{
+//		// this hit test went against the UI container
+//		if (target_fx >= 0.0 && target_fx < 1.0 && target_fy >= 0.0 && target_fy < 1.0)
+//		{
+//			// this point was successfully mapped
+//			mapped_x = (float)target_x / m_width;
+//			mapped_y = (float)target_y / m_height;
+//			return true;
+//		}
+//		return false;
+//	}
 
 	// loop through each layer
-	for (item_layer layernum = ITEM_LAYER_FIRST; layernum < ITEM_LAYER_MAX; layernum++)
-	{
-		int blendmode;
-		item_layer layer = get_layer_and_blendmode(*m_curview, layernum, blendmode);
-		if (m_curview->layer_enabled(layer))
-		{
-			// iterate over items in the layer
-			for (layout_view::item *item = m_curview->first_item(layer); item != NULL; item = item->next())
-			{
-				bool checkit;
+//	for (item_layer layernum = ITEM_LAYER_FIRST; layernum < ITEM_LAYER_MAX; layernum++)
+//	{
+//		int blendmode;
+//		item_layer layer = get_layer_and_blendmode(*m_curview, layernum, blendmode);
+//		if (m_curview->layer_enabled(layer))
+//		{
+//			// iterate over items in the layer
+//			for (layout_view::item *item = m_curview->first_item(layer); item != NULL; item = item->next())
+//			{
+//				bool checkit;
 
-				// if we're looking for a particular container, verify that we have the right one
-				if (container != NULL)
-					checkit = (item->screen() != NULL && &item->screen()->container() == container);
+//				// if we're looking for a particular container, verify that we have the right one
+//				if (container != NULL)
+//					checkit = (item->screen() != NULL && &item->screen()->container() == container);
 
-				// otherwise, assume we're looking for an input
-				else
-					checkit = item->has_input();
+//				// otherwise, assume we're looking for an input
+//				else
+//					checkit = item->has_input();
 
-				// this target is worth looking at; now check the point
-				if (checkit && target_fx >= item->bounds().x0 && target_fx < item->bounds().x1 && target_fy >= item->bounds().y0 && target_fy < item->bounds().y1)
-				{
-					// point successfully mapped
-					mapped_x = (target_fx - item->bounds().x0) / (item->bounds().x1 - item->bounds().x0);
-					mapped_y = (target_fy - item->bounds().y0) / (item->bounds().y1 - item->bounds().y0);
-					mapped_input_tag = item->input_tag_and_mask(mapped_input_mask);
-					return true;
-				}
-			}
-		}
-	}
+//				// this target is worth looking at; now check the point
+//				if (checkit && target_fx >= item->bounds().x0 && target_fx < item->bounds().x1 && target_fy >= item->bounds().y0 && target_fy < item->bounds().y1)
+//				{
+//					// point successfully mapped
+//					mapped_x = (target_fx - item->bounds().x0) / (item->bounds().x1 - item->bounds().x0);
+//					mapped_y = (target_fy - item->bounds().y0) / (item->bounds().y1 - item->bounds().y0);
+//					mapped_input_tag = item->input_tag_and_mask(mapped_input_mask);
+//					return true;
+//				}
+//			}
+//		}
+//	}
 	return false;
 }
 
@@ -1937,16 +1938,16 @@ bool render_target::map_point_internal(INT32 target_x, INT32 target_y, render_co
 //  view, or NULL if it doesn't exist
 //-------------------------------------------------
 
-layout_view *render_target::view_by_index(int index) const
-{
-	// scan the list of views within each layout, skipping those that don't apply
-	for (layout_file *file = m_filelist.first(); file != NULL; file = file->next())
-		for (layout_view *view = file->first_view(); view != NULL; view = view->next())
-			if (!(m_flags & RENDER_CREATE_NO_ART) || !view->has_art())
-				if (index-- == 0)
-					return view;
-	return NULL;
-}
+//layout_view *render_target::view_by_index(int index) const
+//{
+//	// scan the list of views within each layout, skipping those that don't apply
+//	for (layout_file *file = m_filelist.first(); file != NULL; file = file->next())
+//		for (layout_view *view = file->first_view(); view != NULL; view = view->next())
+//			if (!(m_flags & RENDER_CREATE_NO_ART) || !view->has_art())
+//				if (index-- == 0)
+//					return view;
+//	return NULL;
+//}
 
 
 //-------------------------------------------------
@@ -1954,22 +1955,22 @@ layout_view *render_target::view_by_index(int index) const
 //  view
 //-------------------------------------------------
 
-int render_target::view_index(layout_view &targetview) const
-{
-	// find the first named match
-	int index = 0;
+//int render_target::view_index(layout_view &targetview) const
+//{
+//	// find the first named match
+//	int index = 0;
 
-	// scan the list of views within each layout, skipping those that don't apply
-	for (layout_file *file = m_filelist.first(); file != NULL; file = file->next())
-		for (layout_view *view = file->first_view(); view != NULL; view = view->next())
-			if (!(m_flags & RENDER_CREATE_NO_ART) || !view->has_art())
-			{
-				if (&targetview == view)
-					return index;
-				index++;
-			}
-	return 0;
-}
+//	// scan the list of views within each layout, skipping those that don't apply
+//	for (layout_file *file = m_filelist.first(); file != NULL; file = file->next())
+//		for (layout_view *view = file->first_view(); view != NULL; view = view->next())
+//			if (!(m_flags & RENDER_CREATE_NO_ART) || !view->has_art())
+//			{
+//				if (&targetview == view)
+//					return index;
+//				index++;
+//			}
+//	return 0;
+//}
 
 
 //-------------------------------------------------
@@ -1979,44 +1980,45 @@ int render_target::view_index(layout_view &targetview) const
 void render_target::config_load(xml_data_node &targetnode)
 {
 	// find the view
-	const char *viewname = xml_get_attribute_string(&targetnode, "view", NULL);
-	if (viewname != NULL)
-		for (int viewnum = 0; viewnum < 1000; viewnum++)
-		{
-			const char *testname = view_name(viewnum);
-			if (testname == NULL)
-				break;
-			if (!strcmp(viewname, testname))
-			{
-				set_view(viewnum);
-				break;
-			}
-		}
+//	const char *viewname = xml_get_attribute_string(&targetnode, "view", NULL);
+//	if (viewname != NULL)
+//		for (int viewnum = 0; viewnum < 1000; viewnum++)
+//		{
+//			const char *testname = view_name(viewnum);
+//			if (testname == NULL)
+//				break;
+//			if (!strcmp(viewname, testname))
+//			{
+//				set_view(viewnum);
+//				break;
+//			}
+//		}
 
 	// modify the artwork config
-	int tmpint = xml_get_attribute_int(&targetnode, "backdrops", -1);
-	if (tmpint == 0 || tmpint == 1)
-		set_backdrops_enabled(tmpint);
+   int tmpint;
+//   = xml_get_attribute_int(&targetnode, "backdrops", -1);
+//	if (tmpint == 0 || tmpint == 1)
+//		set_backdrops_enabled(tmpint);
 
-	tmpint = xml_get_attribute_int(&targetnode, "overlays", -1);
-	if (tmpint == 0 || tmpint == 1)
-		set_overlays_enabled(tmpint);
+//	tmpint = xml_get_attribute_int(&targetnode, "overlays", -1);
+//	if (tmpint == 0 || tmpint == 1)
+//		set_overlays_enabled(tmpint);
 
-	tmpint = xml_get_attribute_int(&targetnode, "bezels", -1);
-	if (tmpint == 0 || tmpint == 1)
-		set_bezels_enabled(tmpint);
+//	tmpint = xml_get_attribute_int(&targetnode, "bezels", -1);
+//	if (tmpint == 0 || tmpint == 1)
+//		set_bezels_enabled(tmpint);
 
-	tmpint = xml_get_attribute_int(&targetnode, "cpanels", -1);
-	if (tmpint == 0 || tmpint == 1)
-		set_cpanels_enabled(tmpint);
+//	tmpint = xml_get_attribute_int(&targetnode, "cpanels", -1);
+//	if (tmpint == 0 || tmpint == 1)
+//		set_cpanels_enabled(tmpint);
 
-	tmpint = xml_get_attribute_int(&targetnode, "marquees", -1);
-	if (tmpint == 0 || tmpint == 1)
-		set_marquees_enabled(tmpint);
+//	tmpint = xml_get_attribute_int(&targetnode, "marquees", -1);
+//	if (tmpint == 0 || tmpint == 1)
+//		set_marquees_enabled(tmpint);
 
-	tmpint = xml_get_attribute_int(&targetnode, "zoom", -1);
-	if (tmpint == 0 || tmpint == 1)
-		set_zoom_to_screen(tmpint);
+//	tmpint = xml_get_attribute_int(&targetnode, "zoom", -1);
+//	if (tmpint == 0 || tmpint == 1)
+//		set_zoom_to_screen(tmpint);
 
 	// apply orientation
 	tmpint = xml_get_attribute_int(&targetnode, "rotate", -1);
@@ -2033,15 +2035,15 @@ void render_target::config_load(xml_data_node &targetnode)
 		set_orientation(orientation_add(tmpint, orientation()));
 
 		// apply the opposite orientation to the UI
-		if (is_ui_target())
-		{
-			render_container::user_settings settings;
-			render_container &ui_container = m_manager.ui_container();
+//		if (is_ui_target())
+//		{
+//			render_container::user_settings settings;
+//			render_container &ui_container = m_manager.ui_container();
 
-			ui_container.get_user_settings(settings);
-			settings.m_orientation = orientation_add(orientation_reverse(tmpint), settings.m_orientation);
-			ui_container.set_user_settings(settings);
-		}
+//			ui_container.get_user_settings(settings);
+//			settings.m_orientation = orientation_add(orientation_reverse(tmpint), settings.m_orientation);
+//			ui_container.set_user_settings(settings);
+//		}
 	}
 }
 
@@ -2059,11 +2061,11 @@ bool render_target::config_save(xml_data_node &targetnode)
 	xml_set_attribute_int(&targetnode, "index", index());
 
 	// output the view
-	if (m_curview != m_base_view)
-	{
-		xml_set_attribute(&targetnode, "view", m_curview->name());
-		changed = true;
-	}
+//	if (m_curview != m_base_view)
+//	{
+//		xml_set_attribute(&targetnode, "view", m_curview->name());
+//		changed = true;
+//	}
 
 	// output the layer config
 	if (m_layerconfig != m_base_layerconfig)
@@ -2409,10 +2411,10 @@ render_manager::~render_manager()
 bool render_manager::is_live(screen_device &screen) const
 {
 	// iterate over all live targets and or together their screen masks
-	for (render_target *target = m_targetlist.first(); target != NULL; target = target->next())
-		if (!target->hidden() && target->view_screens(target->view()).contains(screen))
-			return true;
-	return false;
+//	for (render_target *target = m_targetlist.first(); target != NULL; target = target->next())
+//		if (!target->hidden() && target->view_screens(target->view()).contains(screen))
+         return true;
+//	return false;
 }
 
 
@@ -2479,28 +2481,28 @@ render_target *render_manager::target_by_index(int index) const
 //  fonts
 //-------------------------------------------------
 
-float render_manager::ui_aspect()
-{
-	int orient = orientation_add(m_ui_target->orientation(), m_ui_container->orientation());
+//float render_manager::ui_aspect()
+//{
+//	int orient = orientation_add(m_ui_target->orientation(), m_ui_container->orientation());
 
-	// based on the orientation of the target, compute height/width or width/height
-	float aspect;
-	if (!(orient & ORIENTATION_SWAP_XY))
-		aspect = (float)m_ui_target->height() / (float)m_ui_target->width();
-	else
-		aspect = (float)m_ui_target->width() / (float)m_ui_target->height();
+//	// based on the orientation of the target, compute height/width or width/height
+//	float aspect;
+//	if (!(orient & ORIENTATION_SWAP_XY))
+//		aspect = (float)m_ui_target->height() / (float)m_ui_target->width();
+//	else
+//		aspect = (float)m_ui_target->width() / (float)m_ui_target->height();
 
-	// if we have a valid pixel aspect, apply that and return
-	if (m_ui_target->pixel_aspect() != 0.0f)
-		return aspect / m_ui_target->pixel_aspect();
+//	// if we have a valid pixel aspect, apply that and return
+//	if (m_ui_target->pixel_aspect() != 0.0f)
+//		return aspect / m_ui_target->pixel_aspect();
 
-	// if not, clamp for extreme proportions
-	if (aspect < 0.66f)
-		aspect = 0.66f;
-	if (aspect > 1.5f)
-		aspect = 1.5f;
-	return aspect;
-}
+//	// if not, clamp for extreme proportions
+//	if (aspect < 0.66f)
+//		aspect = 0.66f;
+//	if (aspect > 1.5f)
+//		aspect = 1.5f;
+//	return aspect;
+//}
 
 
 //-------------------------------------------------
@@ -2536,20 +2538,20 @@ void render_manager::texture_free(render_texture *texture)
 //  font_alloc - allocate a new font instance
 //-------------------------------------------------
 
-render_font *render_manager::font_alloc(const char *filename)
-{
-	return global_alloc(render_font(*this, filename));
-}
+//render_font *render_manager::font_alloc(const char *filename)
+//{
+//	return global_alloc(render_font(*this, filename));
+//}
 
 
 //-------------------------------------------------
 //  font_free - release a font instance
 //-------------------------------------------------
 
-void render_manager::font_free(render_font *font)
-{
-	global_free(font);
-}
+//void render_manager::font_free(render_font *font)
+//{
+//	global_free(font);
+//}
 
 
 //-------------------------------------------------
@@ -2608,13 +2610,13 @@ void render_manager::config_load(int config_type, xml_data_node *parentnode)
 		return;
 
 	// check the UI target
-	xml_data_node *uinode = xml_get_sibling(parentnode->child, "interface");
-	if (uinode != NULL)
-	{
-		render_target *target = target_by_index(xml_get_attribute_int(uinode, "target", 0));
-		if (target != NULL)
-			set_ui_target(*target);
-	}
+//	xml_data_node *uinode = xml_get_sibling(parentnode->child, "interface");
+//	if (uinode != NULL)
+//	{
+//		render_target *target = target_by_index(xml_get_attribute_int(uinode, "target", 0));
+//		if (target != NULL)
+//			set_ui_target(*target);
+//	}
 
 	// iterate over target nodes
 	for (xml_data_node *targetnode = xml_get_sibling(parentnode->child, "target"); targetnode; targetnode = xml_get_sibling(targetnode->next, "target"))

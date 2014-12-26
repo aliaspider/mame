@@ -140,13 +140,13 @@ void osd_interface::register_options(osd_options &options)
 	update_option(options, OSDOPTION_VIDEO, m_video_names);
 
 	// Register sound options and update options
-	sound_options_add("none", OSD_SOUND_NONE);
+//	sound_options_add("none", OSD_SOUND_NONE);
 	sound_register();
 	update_option(options, OSDOPTION_SOUND, m_sound_names);
 
 	// Register debugger options and update options
-	debugger_options_add("none", OSD_DEBUGGER_NONE);
-	debugger_options_add("internal", OSD_DEBUGGER_INTERNAL);
+//	debugger_options_add("none", OSD_DEBUGGER_NONE);
+//	debugger_options_add("internal", OSD_DEBUGGER_INTERNAL);
 	debugger_register();
 	update_option(options, OSDOPTION_DEBUGGER, m_debugger_names);
 }

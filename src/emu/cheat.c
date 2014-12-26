@@ -1343,9 +1343,10 @@ UINT64 cheat_manager::execute_tobcd(symbol_table &table, void *ref, int params, 
 void cheat_manager::frame_update()
 {
 	// set up for accumulating output
-	m_lastline = 0;
-	m_numlines = floor(1.0f / machine().ui().get_line_height());
-	m_numlines = MIN(m_numlines, ARRAY_LENGTH(m_output));
+   m_lastline = 0;
+//	m_numlines = floor(1.0f / machine().ui().get_line_height());
+//	m_numlines = MIN(m_numlines, ARRAY_LENGTH(m_output));
+   m_numlines = ARRAY_LENGTH(m_output);
 	for (int linenum = 0; linenum < ARRAY_LENGTH(m_output); linenum++)
 		m_output[linenum].reset();
 

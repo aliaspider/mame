@@ -162,8 +162,8 @@ public:
 
 public:
 	// construction/destruction
-	device_debug(device_t &device);
-	~device_debug();
+   device_debug(device_t &device);
+   ~device_debug();
 
 	// getters
 	symbol_table &symtable() { return m_symtable; }

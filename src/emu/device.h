@@ -195,7 +195,7 @@ public:
 	void ATTR_COLD save_pointer(_ItemType *value, const char *valname, UINT32 count, int index = 0) { assert(m_save != NULL); m_save->save_pointer(name(), tag(), index, value, valname, count); }
 
 	// debugging
-	device_debug *debug() const { return m_debug; }
+//	device_debug *debug() const { return m_debug; }
 	offs_t safe_pc();
 	offs_t safe_pcbase();
 
@@ -208,7 +208,7 @@ protected:
 	void set_machine(running_machine &machine);
 	void start();
 	void stop();
-	void debug_setup();
+   void debug_setup();
 	void pre_save();
 	void post_load();
 	void notify_clock_changed();
@@ -229,7 +229,7 @@ protected:
 	virtual void device_pre_save() ATTR_COLD;
 	virtual void device_post_load() ATTR_COLD;
 	virtual void device_clock_changed();
-	virtual void device_debug_setup();
+   virtual void device_debug_setup();
 	virtual void device_timer(emu_timer &timer, device_timer_id id, int param, void *ptr);
 
 	//------------------- end derived class overrides
@@ -260,7 +260,7 @@ protected:
 	double                  m_clock_scale;          // clock scale factor
 	attoseconds_t           m_attoseconds_per_clock;// period in attoseconds
 
-	auto_pointer<device_debug> m_debug;
+//	auto_pointer<device_debug> m_debug;
 	memory_region *         m_region;               // our device-local region
 	const machine_config &  m_machine_config;       // reference to the machine's configuration
 	const void *            m_static_config;        // static device configuration

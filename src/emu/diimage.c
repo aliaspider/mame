@@ -11,11 +11,11 @@
 #include "emu.h"
 #include "emuopts.h"
 #include "drivenum.h"
-#include "ui/ui.h"
+//#include "ui/ui.h"
 #include "zippath.h"
-#include "ui/filesel.h"
-#include "ui/swlist.h"
-#include "ui/imgcntrl.h"
+//#include "ui/filesel.h"
+//#include "ui/swlist.h"
+//#include "ui/imgcntrl.h"
 
 //**************************************************************************
 //  DEVICE CONFIG IMAGE INTERFACE
@@ -273,9 +273,10 @@ void device_image_interface::message(const char *format, ...)
 	va_end(args);
 
 	/* display the popup for a standard amount of time */
-	device().machine().ui().popup_time(5, "%s: %s",
-		basename(),
-		buffer);
+   printf("%s: %s",basename(),buffer);
+//	device().machine().ui().popup_time(5, "%s: %s",
+//		basename(),
+//		buffer);
 }
 
 
@@ -1339,7 +1340,7 @@ void device_image_interface::software_get_default_slot(astring &result, const ch
     for ui-level image selection
 -------------------------------------------------*/
 
-ui_menu *device_image_interface::get_selection_menu(running_machine &machine, render_container *container)
-{
-	return auto_alloc_clear(machine, ui_menu_control_device_image(machine, container, this));
-}
+//ui_menu *device_image_interface::get_selection_menu(running_machine &machine, render_container *container)
+//{
+//	return auto_alloc_clear(machine, ui_menu_control_device_image(machine, container, this));
+//}

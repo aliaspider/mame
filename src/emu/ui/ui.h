@@ -129,7 +129,7 @@ public:
 	void display_startup_screens(bool first_time, bool show_disclaimer);
 	void set_startup_text(const char *text, bool force);
 	void update_and_render(render_container *container);
-	render_font *get_font();
+//	render_font *get_font();
 	float get_line_height();
 	float get_char_width(unicode_char ch);
 	float get_string_width(const char *s);
@@ -171,7 +171,7 @@ public:
 private:
 	// instance variables
 	running_machine &       m_machine;
-	render_font *           m_font;
+//	render_font *           m_font;
 	ui_callback             m_handler_callback;
 	UINT32                  m_handler_param;
 	bool                    m_single_step;

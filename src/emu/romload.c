@@ -480,15 +480,14 @@ static void verify_length_and_hash(romload_private *romdata, const char *name, U
 
 static void display_loading_rom_message(romload_private *romdata, const char *name, bool from_list)
 {
-	char buffer[200];
-
 	if (name != NULL)
-		sprintf(buffer, "Loading %s (%d%%)", from_list ? "Software" : emulator_info::get_capstartgamenoun(), (UINT32)(100 * (UINT64)romdata->romsloadedsize / (UINT64)romdata->romstotalsize));
+      printf("Loading %s (%d%%)\n", from_list ? "Software" : emulator_info::get_capstartgamenoun(), (UINT32)(100 * (UINT64)romdata->romsloadedsize / (UINT64)romdata->romstotalsize));
 	else
-		sprintf(buffer, "Loading Complete");
+      printf("Loading Complete\n");
 
-	if (!romdata->machine().ui().is_menu_active())
-		romdata->machine().ui().set_startup_text(buffer, false);
+
+//	if (!romdata->machine().ui().is_menu_active())
+//		romdata->machine().ui().set_startup_text(buffer, false);
 }
 
 

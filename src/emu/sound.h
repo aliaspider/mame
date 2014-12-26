@@ -240,7 +240,7 @@ private:
 	int                 m_attenuation;
 	int                 m_nosound_mode;
 
-	wav_file *          m_wavfile;
+//	wav_file *          m_wavfile;
 
 	// streams data
 	simple_list<sound_stream> m_stream_list;    // list of streams

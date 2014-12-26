@@ -87,11 +87,12 @@ const int DEBUG_FLAG_OSD_ENABLED    = 0x00001000;       // The OSD debugger is e
 // forward declarations
 class cheat_manager;
 class render_manager;
+class input_manager;
 class sound_manager;
 class video_manager;
 class ui_manager;
 class tilemap_manager;
-class debug_view_manager;
+//class debug_view_manager;
 class osd_interface;
 
 struct romload_private;
@@ -164,14 +165,14 @@ public:
 	save_manager &save() { return m_save; }
 	memory_manager &memory() { return m_memory; }
 	ioport_manager &ioport() { return m_ioport; }
-	cheat_manager &cheat() const { assert(m_cheat != NULL); return *m_cheat; }
+//	cheat_manager &cheat() const { assert(m_cheat != NULL); return *m_cheat; }
 	render_manager &render() const { assert(m_render != NULL); return *m_render; }
 	input_manager &input() const { assert(m_input != NULL); return *m_input; }
 	sound_manager &sound() const { assert(m_sound != NULL); return *m_sound; }
 	video_manager &video() const { assert(m_video != NULL); return *m_video; }
-	ui_manager &ui() const { assert(m_ui != NULL); return *m_ui; }
+//	ui_manager &ui() const { assert(m_ui != NULL); return *m_ui; }
 	tilemap_manager &tilemap() const { assert(m_tilemap != NULL); return *m_tilemap; }
-	debug_view_manager &debug_view() const { assert(m_debug_view != NULL); return *m_debug_view; }
+//	debug_view_manager &debug_view() const { assert(m_debug_view != NULL); return *m_debug_view; }
 	driver_device *driver_data() const { return &downcast<driver_device &>(root_device()); }
 	template<class _DriverClass> _DriverClass *driver_data() const { return &downcast<_DriverClass &>(root_device()); }
 	machine_phase phase() const { return m_current_phase; }
@@ -279,14 +280,14 @@ private:
 	const game_driver &     m_system;               // reference to the definition of the game machine
 	machine_manager &       m_manager;              // reference to machine manager system
 	// managers
-	auto_pointer<cheat_manager> m_cheat;            // internal data from cheat.c
+//	auto_pointer<cheat_manager> m_cheat;            // internal data from cheat.c
 	auto_pointer<render_manager> m_render;          // internal data from render.c
 	auto_pointer<input_manager> m_input;            // internal data from input.c
 	auto_pointer<sound_manager> m_sound;            // internal data from sound.c
 	auto_pointer<video_manager> m_video;            // internal data from video.c
-	auto_pointer<ui_manager> m_ui;                  // internal data from ui.c
+//	auto_pointer<ui_manager> m_ui;                  // internal data from ui.c
 	auto_pointer<tilemap_manager> m_tilemap;        // internal data from tilemap.c
-	auto_pointer<debug_view_manager> m_debug_view;  // internal data from debugvw.c
+//	auto_pointer<debug_view_manager> m_debug_view;  // internal data from debugvw.c
 
 	// system state
 	machine_phase           m_current_phase;        // current execution phase

@@ -796,8 +796,7 @@ sound_manager::sound_manager(running_machine &machine)
 		m_rightmix(machine.sample_rate()),
 		m_muted(0),
 		m_attenuation(0),
-		m_nosound_mode(machine.osd().no_sound()),
-		m_wavfile(NULL),
+      m_nosound_mode(machine.osd().no_sound()),
 		m_update_attoseconds(STREAMS_UPDATE_ATTOTIME.attoseconds),
 		m_last_update(attotime::zero)
 {
@@ -815,9 +814,6 @@ sound_manager::sound_manager(running_machine &machine)
 	VPRINTF(("total mixers = %d\n", iter.count()));
 #endif
 
-	// open the output WAV file if specified
-	if (wavfile[0] != 0)
-		m_wavfile = wav_open(wavfile, machine.sample_rate(), 2);
 
 	// register callbacks
 	config_register(machine, "mixer", config_saveload_delegate(FUNC(sound_manager::config_load), this), config_saveload_delegate(FUNC(sound_manager::config_save), this));
@@ -843,10 +839,7 @@ sound_manager::sound_manager(running_machine &machine)
 
 sound_manager::~sound_manager()
 {
-	// close any open WAV file
-	if (m_wavfile != NULL)
-		wav_close(m_wavfile);
-	m_wavfile = NULL;
+
 }
 
 
@@ -1057,14 +1050,12 @@ void sound_manager::update(void *ptr, int param)
 		if (!m_nosound_mode)
 			machine().osd().update_audio_stream(finalmix, finalmix_offset / 2);
 		machine().video().add_sound_to_recording(finalmix, finalmix_offset / 2);
-		if (m_wavfile != NULL)
-			wav_add_data_16(m_wavfile, finalmix, finalmix_offset);
 	}
 
 	// see if we ticked over to the next second
 	attotime curtime = machine().time();
 	bool second_tick = false;
-	if (curtime.seconds != m_last_update.seconds)
+   if (curtime.seconds != m_last_update.seconds)
 	{
 		assert(curtime.seconds == m_last_update.seconds + 1);
 		second_tick = true;
