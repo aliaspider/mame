@@ -286,25 +286,8 @@ BUILD_ZLIB = 0
 # sanity check the configuration
 #-------------------------------------------------
 
-# enable symbols as it is useless without them
-ifdef SANITIZE
-SYMBOLS = 1
-endif
-
-# specify a default optimization level if none explicitly stated
-ifndef OPTIMIZE
-ifndef SYMBOLS
-OPTIMIZE = 3
-else
-OPTIMIZE = 0
-endif
-endif
-
 # profiler defaults to on for DEBUG builds
 ifdef DEBUG
-ifndef PROFILER
-PROFILER = 1
-endif
 SYMBOLS = 1
 OPTIMIZE = 0
 else
@@ -315,21 +298,13 @@ endif
 # TODO: also move it up, so it isn't optimized by default?
 # allow gprof profiling as well, which overrides the internal PROFILER
 # also enable symbols as it is useless without them
-ifdef PROFILE
-PROFILER =
-SYMBOLS = 1
-ifndef SYMLEVEL
-SYMLEVEL = 1
-endif
-endif
-
-# set the symbols level
-ifdef SYMBOLS
-ifndef SYMLEVEL
-SYMLEVEL = 2
-endif
-endif
-
+#ifdef PROFILE
+#PROFILER =
+#SYMBOLS = 1
+#ifndef SYMLEVEL
+#SYMLEVEL = 1
+#endif
+#endif
 
 #-------------------------------------------------
 # platform-specific definitions
@@ -519,7 +494,7 @@ COBJFLAGS += -x objective-c++
 CCOMFLAGS += -pipe
 
 # add -g if we need symbols, and ensure we have frame pointers
-ifdef SYMBOLS
+ifeq ($(SYMBOLS),1)
 CCOMFLAGS += -g$(SYMLEVEL) -fno-omit-frame-pointer -fno-optimize-sibling-calls
 endif
 
@@ -811,7 +786,8 @@ default: maketree buildtools emulator
 
 all: default tools
 
-7Z_LIB = $(OBJ)/lib7z.a
+7Z_LIB =
+#$(OBJ)/lib7z.a
 
 #-------------------------------------------------
 # defines needed by multiple make files
@@ -913,7 +889,7 @@ $(sort $(OBJDIRS)):
 ifndef EXECUTABLE_DEFINED
 
 #$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(SQLITE3_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE)
-$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(FORMATS_LIB) $(ZLIB) $(LIBOCORE) $(RESFILE) $(7Z_LIB)
+$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(FORMATS_LIB) $(ZLIB) $(LIBOCORE) $(RESFILE)
 	$(CC) $(CDEFS) $(CFLAGS) -c $(SRC)/version.c -o $(VERSIONOBJ)
 	@echo Linking $@...
 ifeq ($(TARGETOS),emscripten)

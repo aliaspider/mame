@@ -15,7 +15,7 @@
 #include "audit.h"
 #include "info.h"
 #include "unzip.h"
-#include "un7z.h"
+//#include "un7z.h"
 #include "validity.h"
 #include "sound/samples.h"
 #include "clifront.h"
@@ -291,7 +291,7 @@ int cli_frontend::execute(int argc, char **argv)
 		m_result = MAMERR_FATALERROR;
 	}
 
-	_7z_file_cache_clear();
+//	_7z_file_cache_clear();
 
 	return m_result;
 }
@@ -1744,48 +1744,49 @@ void media_identifier::identify(const char *filename)
 	}
 
 	// if that failed, and the filename ends with .zip, identify as a ZIP file
-	if (core_filename_ends_with(filename, ".7z"))
-	{
-		// first attempt to examine it as a valid _7Z file
-		_7z_file *_7z = NULL;
-		_7z_error _7zerr = _7z_file_open(filename, &_7z);
-		if (_7zerr == _7ZERR_NONE && _7z != NULL)
-		{
-			// loop over entries in the .7z, skipping empty files and directories
-			for (int i = 0; i < _7z->db.db.NumFiles; i++)
-			{
-				const CSzFileItem *f = _7z->db.db.Files + i;
-				_7z->curr_file_idx = i;
-				int namelen = SzArEx_GetFileNameUtf16(&_7z->db, i, NULL);
-				dynamic_array<UINT16> temp(namelen);
-				dynamic_buffer temp2(namelen+1);
-				UINT8* temp3 = (UINT8*)temp2;
-				memset(temp3, 0x00, namelen);
-				SzArEx_GetFileNameUtf16(&_7z->db, i, temp);
-				// crude, need real UTF16->UTF8 conversion ideally
-				for (int j=0;j<namelen;j++)
-				{
-					temp3[j] = (UINT8)temp[j];
-				}
+//	if (core_filename_ends_with(filename, ".7z"))
+//	{
+//		// first attempt to examine it as a valid _7Z file
+//		_7z_file *_7z = NULL;
+//		_7z_error _7zerr = _7z_file_open(filename, &_7z);
+//		if (_7zerr == _7ZERR_NONE && _7z != NULL)
+//		{
+//			// loop over entries in the .7z, skipping empty files and directories
+//			for (int i = 0; i < _7z->db.db.NumFiles; i++)
+//			{
+//				const CSzFileItem *f = _7z->db.db.Files + i;
+//				_7z->curr_file_idx = i;
+//				int namelen = SzArEx_GetFileNameUtf16(&_7z->db, i, NULL);
+//				dynamic_array<UINT16> temp(namelen);
+//				dynamic_buffer temp2(namelen+1);
+//				UINT8* temp3 = (UINT8*)temp2;
+//				memset(temp3, 0x00, namelen);
+//				SzArEx_GetFileNameUtf16(&_7z->db, i, temp);
+//				// crude, need real UTF16->UTF8 conversion ideally
+//				for (int j=0;j<namelen;j++)
+//				{
+//					temp3[j] = (UINT8)temp[j];
+//				}
 
-				if (!(f->IsDir) && (f->Size != 0))
-				{
-					// decompress data into RAM and identify it
-					dynamic_buffer data(f->Size);
-					_7zerr = _7z_file_decompress(_7z, data, f->Size);
-					if (_7zerr == _7ZERR_NONE)
-						identify_data((const char*)&temp2[0], data, f->Size);
-				}
-			}
+//				if (!(f->IsDir) && (f->Size != 0))
+//				{
+//					// decompress data into RAM and identify it
+//					dynamic_buffer data(f->Size);
+//					_7zerr = _7z_file_decompress(_7z, data, f->Size);
+//					if (_7zerr == _7ZERR_NONE)
+//						identify_data((const char*)&temp2[0], data, f->Size);
+//				}
+//			}
 
-			// close up
-			_7z_file_close(_7z);
-		}
+//			// close up
+//			_7z_file_close(_7z);
+//		}
 
-		// clear out any cached files
-		_7z_file_cache_clear();
-	}
-	else if (core_filename_ends_with(filename, ".zip"))
+//		// clear out any cached files
+//		_7z_file_cache_clear();
+//	}
+//	else
+      if (core_filename_ends_with(filename, ".zip"))
 	{
 		// first attempt to examine it as a valid ZIP file
 		zip_file *zip = NULL;

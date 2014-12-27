@@ -33,41 +33,40 @@ OBJDIRS += \
 # utility library objects
 #-------------------------------------------------
 
-UTILOBJS = \
-	$(LIBOBJ)/util/astring.o \
-	$(LIBOBJ)/util/avhuff.o \
-	$(LIBOBJ)/util/aviio.o \
-	$(LIBOBJ)/util/bitmap.o \
-	$(LIBOBJ)/util/cdrom.o \
-	$(LIBOBJ)/util/chd.o \
-	$(LIBOBJ)/util/chdcd.o \
-	$(LIBOBJ)/util/chdcodec.o \
-	$(LIBOBJ)/util/corealloc.o \
-	$(LIBOBJ)/util/corefile.o \
-	$(LIBOBJ)/util/corestr.o \
-	$(LIBOBJ)/util/coreutil.o \
-	$(LIBOBJ)/util/cstrpool.o \
-	$(LIBOBJ)/util/delegate.o \
-	$(LIBOBJ)/util/flac.o \
-	$(LIBOBJ)/util/harddisk.o \
-	$(LIBOBJ)/util/hashing.o \
-	$(LIBOBJ)/util/huffman.o \
-	$(LIBOBJ)/util/jedparse.o \
-	$(LIBOBJ)/util/md5.o \
-	$(LIBOBJ)/util/opresolv.o \
-	$(LIBOBJ)/util/options.o \
-	$(LIBOBJ)/util/palette.o \
-	$(LIBOBJ)/util/plaparse.o \
-	$(LIBOBJ)/util/png.o \
-	$(LIBOBJ)/util/pool.o \
-	$(LIBOBJ)/util/sha1.o \
-	$(LIBOBJ)/util/tagmap.o \
-	$(LIBOBJ)/util/unicode.o \
-	$(LIBOBJ)/util/unzip.o \
-	$(LIBOBJ)/util/un7z.o \
-	$(LIBOBJ)/util/vbiparse.o \
-	$(LIBOBJ)/util/xmlfile.o \
-	$(LIBOBJ)/util/zippath.o \
+UTILOBJS  = $(LIBOBJ)/util/astring.o
+UTILOBJS += $(LIBOBJ)/util/avhuff.o
+UTILOBJS += $(LIBOBJ)/util/aviio.o
+UTILOBJS += $(LIBOBJ)/util/bitmap.o
+UTILOBJS += $(LIBOBJ)/util/cdrom.o
+UTILOBJS += $(LIBOBJ)/util/chd.o
+UTILOBJS += $(LIBOBJ)/util/chdcd.o
+UTILOBJS += $(LIBOBJ)/util/chdcodec.o
+UTILOBJS += $(LIBOBJ)/util/corealloc.o
+UTILOBJS += $(LIBOBJ)/util/corefile.o
+UTILOBJS += $(LIBOBJ)/util/corestr.o
+UTILOBJS += $(LIBOBJ)/util/coreutil.o
+UTILOBJS += $(LIBOBJ)/util/cstrpool.o
+UTILOBJS += $(LIBOBJ)/util/delegate.o
+UTILOBJS += $(LIBOBJ)/util/flac.o
+UTILOBJS += $(LIBOBJ)/util/harddisk.o
+UTILOBJS += $(LIBOBJ)/util/hashing.o
+UTILOBJS += $(LIBOBJ)/util/huffman.o
+UTILOBJS += $(LIBOBJ)/util/jedparse.o
+UTILOBJS += $(LIBOBJ)/util/md5.o
+UTILOBJS += $(LIBOBJ)/util/opresolv.o
+UTILOBJS += $(LIBOBJ)/util/options.o
+UTILOBJS += $(LIBOBJ)/util/palette.o
+UTILOBJS += $(LIBOBJ)/util/plaparse.o
+UTILOBJS += $(LIBOBJ)/util/png.o
+UTILOBJS += $(LIBOBJ)/util/pool.o
+UTILOBJS += $(LIBOBJ)/util/sha1.o
+UTILOBJS += $(LIBOBJ)/util/tagmap.o
+UTILOBJS += $(LIBOBJ)/util/unicode.o
+UTILOBJS += $(LIBOBJ)/util/unzip.o
+#UTILOBJS += $(LIBOBJ)/util/un7z.o
+UTILOBJS += $(LIBOBJ)/util/vbiparse.o
+UTILOBJS += $(LIBOBJ)/util/xmlfile.o
+UTILOBJS += $(LIBOBJ)/util/zippath.o
 
 $(OBJ)/libutil.a: $(UTILOBJS)
 

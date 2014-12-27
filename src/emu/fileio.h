@@ -143,8 +143,8 @@ private:
 	bool zip_filename_match(const zip_file_header &header, const astring &filename);
 	bool zip_header_is_path(const zip_file_header &header);
 
-	file_error attempt__7zped();
-	file_error load__7zped_file();
+//	file_error attempt__7zped();
+//	file_error load__7zped_file();
 
 	// internal state
 	astring         m_filename;                     // original filename provided
@@ -159,9 +159,9 @@ private:
 	dynamic_buffer  m_zipdata;                      // ZIP file data
 	UINT64          m_ziplength;                    // ZIP file length
 
-	_7z_file *      m__7zfile;                      // 7Z file pointer
-	dynamic_buffer  m__7zdata;                      // 7Z file data
-	UINT64          m__7zlength;                    // 7Z file length
+//	_7z_file *      m__7zfile;                      // 7Z file pointer
+//	dynamic_buffer  m__7zdata;                      // 7Z file data
+//	UINT64          m__7zlength;                    // 7Z file length
 
 	bool            m_remove_on_close;              // flag: remove the file when closing
 };

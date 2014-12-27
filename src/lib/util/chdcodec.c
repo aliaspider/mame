@@ -117,44 +117,44 @@ private:
 // ======================> chd_lzma_compressor
 
 // LZMA compressor
-class chd_lzma_compressor : public chd_compressor
-{
-public:
-	// construction/destruction
-	chd_lzma_compressor(chd_file &chd, UINT32 hunkbytes, bool lossy);
-	~chd_lzma_compressor();
+//class chd_lzma_compressor : public chd_compressor
+//{
+//public:
+//	// construction/destruction
+//	chd_lzma_compressor(chd_file &chd, UINT32 hunkbytes, bool lossy);
+//	~chd_lzma_compressor();
 
-	// core functionality
-	virtual UINT32 compress(const UINT8 *src, UINT32 srclen, UINT8 *dest);
+//	// core functionality
+//	virtual UINT32 compress(const UINT8 *src, UINT32 srclen, UINT8 *dest);
 
-	// helpers
-	static void configure_properties(CLzmaEncProps &props, UINT32 hunkbytes);
+//	// helpers
+//	static void configure_properties(CLzmaEncProps &props, UINT32 hunkbytes);
 
-private:
-	// internal state
-	CLzmaEncProps           m_props;
-	chd_lzma_allocator      m_allocator;
-};
+//private:
+//	// internal state
+//	CLzmaEncProps           m_props;
+//	chd_lzma_allocator      m_allocator;
+//};
 
 
 // ======================> chd_lzma_decompressor
 
 // LZMA decompressor
-class chd_lzma_decompressor : public chd_decompressor
-{
-public:
-	// construction/destruction
-	chd_lzma_decompressor(chd_file &chd, UINT32 hunkbytes, bool lossy);
-	~chd_lzma_decompressor();
+//class chd_lzma_decompressor : public chd_decompressor
+//{
+//public:
+//	// construction/destruction
+//	chd_lzma_decompressor(chd_file &chd, UINT32 hunkbytes, bool lossy);
+//	~chd_lzma_decompressor();
 
-	// core functionality
-	virtual void decompress(const UINT8 *src, UINT32 complen, UINT8 *dest, UINT32 destlen);
+//	// core functionality
+//	virtual void decompress(const UINT8 *src, UINT32 complen, UINT8 *dest, UINT32 destlen);
 
-private:
-	// internal state
-	CLzmaDec                m_decoder;
-	chd_lzma_allocator      m_allocator;
-};
+//private:
+//	// internal state
+//	CLzmaDec                m_decoder;
+//	chd_lzma_allocator      m_allocator;
+//};
 
 
 // ======================> chd_huffman_compressor
@@ -463,13 +463,13 @@ const chd_codec_list::codec_entry chd_codec_list::s_codec_list[] =
 {
 	// general codecs
 	{ CHD_CODEC_ZLIB,       false,  "Deflate",              &chd_codec_list::construct_compressor<chd_zlib_compressor>,     &chd_codec_list::construct_decompressor<chd_zlib_decompressor> },
-	{ CHD_CODEC_LZMA,       false,  "LZMA",                 &chd_codec_list::construct_compressor<chd_lzma_compressor>,     &chd_codec_list::construct_decompressor<chd_lzma_decompressor> },
+//	{ CHD_CODEC_LZMA,       false,  "LZMA",                 &chd_codec_list::construct_compressor<chd_lzma_compressor>,     &chd_codec_list::construct_decompressor<chd_lzma_decompressor> },
 	{ CHD_CODEC_HUFFMAN,    false,  "Huffman",              &chd_codec_list::construct_compressor<chd_huffman_compressor>,  &chd_codec_list::construct_decompressor<chd_huffman_decompressor> },
 	{ CHD_CODEC_FLAC,       false,  "FLAC",                 &chd_codec_list::construct_compressor<chd_flac_compressor>,     &chd_codec_list::construct_decompressor<chd_flac_decompressor> },
 
 	// general codecs with CD frontend
 	{ CHD_CODEC_CD_ZLIB,    false,  "CD Deflate",           &chd_codec_list::construct_compressor<chd_cd_compressor<chd_zlib_compressor, chd_zlib_compressor> >,        &chd_codec_list::construct_decompressor<chd_cd_decompressor<chd_zlib_decompressor, chd_zlib_decompressor> > },
-	{ CHD_CODEC_CD_LZMA,    false,  "CD LZMA",              &chd_codec_list::construct_compressor<chd_cd_compressor<chd_lzma_compressor, chd_zlib_compressor> >,        &chd_codec_list::construct_decompressor<chd_cd_decompressor<chd_lzma_decompressor, chd_zlib_decompressor> > },
+//	{ CHD_CODEC_CD_LZMA,    false,  "CD LZMA",              &chd_codec_list::construct_compressor<chd_cd_compressor<chd_lzma_compressor, chd_zlib_compressor> >,        &chd_codec_list::construct_decompressor<chd_cd_decompressor<chd_lzma_decompressor, chd_zlib_decompressor> > },
 	{ CHD_CODEC_CD_FLAC,    false,  "CD FLAC",              &chd_codec_list::construct_compressor<chd_cd_flac_compressor>,  &chd_codec_list::construct_decompressor<chd_cd_flac_decompressor> },
 
 	// A/V codecs
@@ -1035,144 +1035,144 @@ void chd_lzma_allocator::fast_free(void *p, void *address)
 
 
 
-//**************************************************************************
-//  LZMA COMPRESSOR
-//**************************************************************************
+////**************************************************************************
+////  LZMA COMPRESSOR
+////**************************************************************************
 
-//-------------------------------------------------
-//  chd_lzma_compressor - constructor
-//-------------------------------------------------
+////-------------------------------------------------
+////  chd_lzma_compressor - constructor
+////-------------------------------------------------
 
-chd_lzma_compressor::chd_lzma_compressor(chd_file &chd, UINT32 hunkbytes, bool lossy)
-	: chd_compressor(chd, hunkbytes, lossy)
-{
-	// initialize the properties
-	configure_properties(m_props, hunkbytes);
-}
-
-
-//-------------------------------------------------
-//  ~chd_lzma_compressor - destructor
-//-------------------------------------------------
-
-chd_lzma_compressor::~chd_lzma_compressor()
-{
-}
+//chd_lzma_compressor::chd_lzma_compressor(chd_file &chd, UINT32 hunkbytes, bool lossy)
+//	: chd_compressor(chd, hunkbytes, lossy)
+//{
+//	// initialize the properties
+//	configure_properties(m_props, hunkbytes);
+//}
 
 
-//-------------------------------------------------
-//  compress - compress data using the LZMA codec
-//-------------------------------------------------
+////-------------------------------------------------
+////  ~chd_lzma_compressor - destructor
+////-------------------------------------------------
 
-UINT32 chd_lzma_compressor::compress(const UINT8 *src, UINT32 srclen, UINT8 *dest)
-{
-	// allocate the encoder
-	CLzmaEncHandle encoder = LzmaEnc_Create(&m_allocator);
-	if (encoder == NULL)
-		throw CHDERR_COMPRESSION_ERROR;
-
-	try
-	{
-		// configure the encoder
-		SRes res = LzmaEnc_SetProps(encoder, &m_props);
-		if (res != SZ_OK)
-			throw CHDERR_COMPRESSION_ERROR;
-
-		// run it
-		SizeT complen = srclen;
-		res = LzmaEnc_MemEncode(encoder, dest, &complen, src, srclen, 0, NULL, &m_allocator, &m_allocator);
-		if (res != SZ_OK)
-			throw CHDERR_COMPRESSION_ERROR;
-
-		// clean up
-		LzmaEnc_Destroy(encoder, &m_allocator, &m_allocator);
-		return complen;
-	}
-	catch (...)
-	{
-		// destroy before re-throwing
-		LzmaEnc_Destroy(encoder, &m_allocator, &m_allocator);
-		throw;
-	}
-}
+//chd_lzma_compressor::~chd_lzma_compressor()
+//{
+//}
 
 
-//-------------------------------------------------
-//  configure_properties - configure the LZMA
-//  codec
-//-------------------------------------------------
+////-------------------------------------------------
+////  compress - compress data using the LZMA codec
+////-------------------------------------------------
 
-void chd_lzma_compressor::configure_properties(CLzmaEncProps &props, UINT32 hunkbytes)
-{
-	LzmaEncProps_Init(&props);
-	props.level = 9;
-	props.reduceSize = hunkbytes;
-	LzmaEncProps_Normalize(&props);
-}
+//UINT32 chd_lzma_compressor::compress(const UINT8 *src, UINT32 srclen, UINT8 *dest)
+//{
+//	// allocate the encoder
+//	CLzmaEncHandle encoder = LzmaEnc_Create(&m_allocator);
+//	if (encoder == NULL)
+//		throw CHDERR_COMPRESSION_ERROR;
 
+//	try
+//	{
+//		// configure the encoder
+//		SRes res = LzmaEnc_SetProps(encoder, &m_props);
+//		if (res != SZ_OK)
+//			throw CHDERR_COMPRESSION_ERROR;
 
+//		// run it
+//		SizeT complen = srclen;
+//		res = LzmaEnc_MemEncode(encoder, dest, &complen, src, srclen, 0, NULL, &m_allocator, &m_allocator);
+//		if (res != SZ_OK)
+//			throw CHDERR_COMPRESSION_ERROR;
 
-//**************************************************************************
-//  LZMA DECOMPRESSOR
-//**************************************************************************
-
-//-------------------------------------------------
-//  chd_lzma_decompressor - constructor
-//-------------------------------------------------
-
-chd_lzma_decompressor::chd_lzma_decompressor(chd_file &chd, UINT32 hunkbytes, bool lossy)
-	: chd_decompressor(chd, hunkbytes, lossy)
-{
-	// construct the decoder
-	LzmaDec_Construct(&m_decoder);
-
-	// configure the properties like the compressor did
-	CLzmaEncProps encoder_props;
-	chd_lzma_compressor::configure_properties(encoder_props, hunkbytes);
-
-	// convert to decoder properties
-	CLzmaProps decoder_props;
-	decoder_props.lc = encoder_props.lc;
-	decoder_props.lp = encoder_props.lp;
-	decoder_props.pb = encoder_props.pb;
-	decoder_props.dicSize = encoder_props.dictSize;
-
-	// do memory allocations
-	SRes res = LzmaDec_Allocate_MAME(&m_decoder, &decoder_props, &m_allocator);
-	if (res != SZ_OK)
-		throw CHDERR_DECOMPRESSION_ERROR;
-}
+//		// clean up
+//		LzmaEnc_Destroy(encoder, &m_allocator, &m_allocator);
+//		return complen;
+//	}
+//	catch (...)
+//	{
+//		// destroy before re-throwing
+//		LzmaEnc_Destroy(encoder, &m_allocator, &m_allocator);
+//		throw;
+//	}
+//}
 
 
-//-------------------------------------------------
-//  ~chd_lzma_decompressor - destructor
-//-------------------------------------------------
+////-------------------------------------------------
+////  configure_properties - configure the LZMA
+////  codec
+////-------------------------------------------------
 
-chd_lzma_decompressor::~chd_lzma_decompressor()
-{
-	// free memory
-	LzmaDec_Free(&m_decoder, &m_allocator);
-}
+//void chd_lzma_compressor::configure_properties(CLzmaEncProps &props, UINT32 hunkbytes)
+//{
+//	LzmaEncProps_Init(&props);
+//	props.level = 9;
+//	props.reduceSize = hunkbytes;
+//	LzmaEncProps_Normalize(&props);
+//}
 
 
-//-------------------------------------------------
-//  decompress - decompress data using the LZMA
-//  codec
-//-------------------------------------------------
 
-void chd_lzma_decompressor::decompress(const UINT8 *src, UINT32 complen, UINT8 *dest, UINT32 destlen)
-{
-	// initialize
-	LzmaDec_Init(&m_decoder);
+////**************************************************************************
+////  LZMA DECOMPRESSOR
+////**************************************************************************
 
-	// decode
-	SizeT consumedlen = complen;
-	SizeT decodedlen = destlen;
-	ELzmaStatus status;
-	SRes res = LzmaDec_DecodeToBuf(&m_decoder, dest, &decodedlen, src, &consumedlen, LZMA_FINISH_END, &status);
-	if ((res != SZ_OK && res != LZMA_STATUS_MAYBE_FINISHED_WITHOUT_MARK) || consumedlen != complen || decodedlen != destlen)
-		throw CHDERR_DECOMPRESSION_ERROR;
-}
+////-------------------------------------------------
+////  chd_lzma_decompressor - constructor
+////-------------------------------------------------
+
+//chd_lzma_decompressor::chd_lzma_decompressor(chd_file &chd, UINT32 hunkbytes, bool lossy)
+//	: chd_decompressor(chd, hunkbytes, lossy)
+//{
+//	// construct the decoder
+//	LzmaDec_Construct(&m_decoder);
+
+//	// configure the properties like the compressor did
+//	CLzmaEncProps encoder_props;
+//	chd_lzma_compressor::configure_properties(encoder_props, hunkbytes);
+
+//	// convert to decoder properties
+//	CLzmaProps decoder_props;
+//	decoder_props.lc = encoder_props.lc;
+//	decoder_props.lp = encoder_props.lp;
+//	decoder_props.pb = encoder_props.pb;
+//	decoder_props.dicSize = encoder_props.dictSize;
+
+//	// do memory allocations
+//	SRes res = LzmaDec_Allocate_MAME(&m_decoder, &decoder_props, &m_allocator);
+//	if (res != SZ_OK)
+//		throw CHDERR_DECOMPRESSION_ERROR;
+//}
+
+
+////-------------------------------------------------
+////  ~chd_lzma_decompressor - destructor
+////-------------------------------------------------
+
+//chd_lzma_decompressor::~chd_lzma_decompressor()
+//{
+//	// free memory
+//	LzmaDec_Free(&m_decoder, &m_allocator);
+//}
+
+
+////-------------------------------------------------
+////  decompress - decompress data using the LZMA
+////  codec
+////-------------------------------------------------
+
+//void chd_lzma_decompressor::decompress(const UINT8 *src, UINT32 complen, UINT8 *dest, UINT32 destlen)
+//{
+//	// initialize
+//	LzmaDec_Init(&m_decoder);
+
+//	// decode
+//	SizeT consumedlen = complen;
+//	SizeT decodedlen = destlen;
+//	ELzmaStatus status;
+//	SRes res = LzmaDec_DecodeToBuf(&m_decoder, dest, &decodedlen, src, &consumedlen, LZMA_FINISH_END, &status);
+//	if ((res != SZ_OK && res != LZMA_STATUS_MAYBE_FINISHED_WITHOUT_MARK) || consumedlen != complen || decodedlen != destlen)
+//		throw CHDERR_DECOMPRESSION_ERROR;
+//}
 
 
 
