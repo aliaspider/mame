@@ -736,42 +736,46 @@ FLAC_LIB =
 endif
 
 # add jpeglib image library
-ifeq ($(BUILD_JPEGLIB),1)
-INCPATH += -I$(SRC)/lib/libjpeg
-JPEG_LIB = $(OBJ)/libjpeg.a
-else
-LIBS += -ljpeg
+#ifeq ($(BUILD_JPEGLIB),1)
+#INCPATH += -I$(SRC)/lib/libjpeg
+#JPEG_LIB = $(OBJ)/libjpeg.a
+#else
+#LIBS += -ljpeg
 JPEG_LIB =
-endif
+#endif
 
 # add SoftFloat floating point emulation library
-SOFTFLOAT = $(OBJ)/libsoftfloat.a
+SOFTFLOAT =
+#$(OBJ)/libsoftfloat.a
 
 # add formats emulation library
-FORMATS_LIB = $(OBJ)/libformats.a
+FORMATS_LIB =
+#$(OBJ)/libformats.a
 
 # add LUA library
-LUA_LIB = $(OBJ)/liblua.a
+LUA_LIB =
+#$(OBJ)/liblua.a
 
 # add web library
-WEB_LIB = $(OBJ)/libweb.a
+WEB_LIB =
+#$(OBJ)/libweb.a
 
 # add SQLite3 library
-ifeq ($(BUILD_SQLITE3),1)
-SQLITE3_LIB = $(OBJ)/libsqlite3.a
-else
-LIBS += -lsqlite3
+#ifeq ($(BUILD_SQLITE3),1)
+#SQLITE3_LIB = $(OBJ)/libsqlite3.a
+#else
+#LIBS += -lsqlite3
 SQLITE3_LIB =
-endif
+#endif
 
 # add PortMidi MIDI library
-ifeq ($(BUILD_MIDILIB),1)
-INCPATH += -I$(SRC)/lib/portmidi
-MIDI_LIB = $(OBJ)/libportmidi.a
-else
+#ifeq ($(BUILD_MIDILIB),1)
+#INCPATH += -I$(SRC)/lib/portmidi
+#MIDI_LIB = $(OBJ)/libportmidi.a
+#else
 #LIBS += -lportmidi
 MIDI_LIB =
-endif
+#endif
 
 ifneq (,$(findstring clang,$(CC)))
 LIBS += -lstdc++ -lpthread
