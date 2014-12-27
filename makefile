@@ -325,16 +325,27 @@ BUILD_EXE = $(EXE)
 endif
 
 # compiler, linker and utilities
+ifeq ($(V),1)
 ifneq ($(TARGETOS),emscripten)
 AR = ar
 CC = gcc
 LD = g++
 endif
 MD = -mkdir$(EXE)
+RM = rm -f
+OBJDUMP = objdump
+PYTHON = python
+else
+ifneq ($(TARGETOS),emscripten)
+AR = @ar
+CC = @gcc
+LD = @g++
+endif
+MD = -mkdir$(EXE)
 RM = @rm -f
 OBJDUMP = @objdump
 PYTHON = @python
-
+endif
 
 #-------------------------------------------------
 # form the name of the executable
