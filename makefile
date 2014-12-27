@@ -799,7 +799,7 @@ endif
 
 default: maketree buildtools emulator
 
-all: default tools
+all: rm_libs default tools
 
 7Z_LIB =
 #$(OBJ)/lib7z.a
@@ -997,4 +997,7 @@ endif
 #-include depend_emu.mak
 #-include depend_$(TARGET).mak
 
-.PHONY: $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(FORMATS_LIB) $(ZLIB) $(LIBOCORE) $(RESFILE)
+#.PHONY: $(EMUINFOOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(FORMATS_LIB) $(ZLIB) $(LIBOCORE) $(RESFILE)
+rm_libs:
+	$(RM) $(EMUINFOOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(FORMATS_LIB) $(ZLIB) $(LIBOCORE) $(RESFILE)
+
