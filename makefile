@@ -996,3 +996,5 @@ endif
 
 #-include depend_emu.mak
 #-include depend_$(TARGET).mak
+
+.PHONY: $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(FORMATS_LIB) $(ZLIB) $(LIBOCORE) $(RESFILE)
